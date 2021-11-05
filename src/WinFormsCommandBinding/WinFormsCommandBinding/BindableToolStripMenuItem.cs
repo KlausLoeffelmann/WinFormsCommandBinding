@@ -3,17 +3,19 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Windows.Input;
 
+#nullable enable
+
 namespace WinFormsCommandBinding.Models
 {
-    public class BindableToolStripMenuItem 
+    public class BindableToolStripMenuItem
         : ToolStripMenuItem, IBindableComponent
     {
-        public event EventHandler BindingContextChanged;
-        public event EventHandler CommandChanged;
+        public event EventHandler? BindingContextChanged;
+        public event EventHandler? CommandChanged;
 
-        private BindingContext _bindingContext;
-        private ControlBindingsCollection _dataBindings;
-        private ICommand _command;
+        private BindingContext? _bindingContext;
+        private ControlBindingsCollection? _dataBindings;
+        private ICommand? _command;
 
         private void UpdateBindings()
         {
@@ -75,16 +77,16 @@ namespace WinFormsCommandBinding.Models
         }
 
         [DefaultValue(""), Bindable(true), Localizable(true)]
-        public override string Text 
-        { 
-            get => base.Text; 
-            set => base.Text = value; 
+        public override string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
         }
 
-        [Bindable(true), 
-         Browsable(false), 
+        [Bindable(true),
+         Browsable(false),
          DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public ICommand Command
+        public ICommand? Command
         {
             get => _command;
             set
@@ -97,7 +99,6 @@ namespace WinFormsCommandBinding.Models
                     }
 
                     // Q: Do we need to restore Enabled, if _command changes from {} to null?
-
                     _command = value;
                     OnCommandChanged(EventArgs.Empty);
 
@@ -121,7 +122,7 @@ namespace WinFormsCommandBinding.Models
             }
         }
 
-        private void Command_CanExecuteChanged(object sender, EventArgs e)
-            => Enabled = _command.CanExecute(null);
+        private void Command_CanExecuteChanged(object? sender, EventArgs e)
+            => Enabled = _command?.CanExecute(null) ?? false;
     }
 }

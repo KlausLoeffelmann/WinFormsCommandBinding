@@ -22,5 +22,17 @@ namespace WinFormsCommandBindingDemo
                 _dataContext = value;
             }
         }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // DataContextForm
+            // 
+            this.ClientSize = new System.Drawing.Size(657, 468);
+            this.Name = "DataContextForm";
+            this.ResumeLayout(false);
+
+        }
     }
 }

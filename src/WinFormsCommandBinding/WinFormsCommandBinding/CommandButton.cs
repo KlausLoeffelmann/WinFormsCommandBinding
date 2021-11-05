@@ -3,18 +3,20 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Windows.Input;
 
+#nullable enable
+
 namespace WinFormsCommandBinding
 {
     public class CommandButton : Button
     {
-        public event EventHandler CommandChanged;
+        public event EventHandler? CommandChanged;
 
-        private ICommand _command;
+        private ICommand? _command;
 
         [Bindable(true),
          Browsable(false),
          DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public ICommand Command
+        public ICommand? Command
         {
             get => _command;
             set
@@ -42,7 +44,7 @@ namespace WinFormsCommandBinding
             }
         }
 
-        protected virtual void OnCommandChanged(EventArgs e) 
+        protected virtual void OnCommandChanged(EventArgs e)
             => CommandChanged?.Invoke(this, e);
 
         protected override void OnClick(EventArgs e)
@@ -68,7 +70,7 @@ namespace WinFormsCommandBinding
             }
         }
 
-        private void Command_CanExecuteChanged(object sender, EventArgs e) 
-            => Enabled = _command.CanExecute(null);
+        private void Command_CanExecuteChanged(object? sender, EventArgs e)
+            => Enabled = _command?.CanExecute(null) ?? false;
     }
 }

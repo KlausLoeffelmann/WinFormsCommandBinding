@@ -3,18 +3,20 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Windows.Input;
 
+#nullable enable
+
 namespace WinFormsCommandBinding
 {
     public partial class BindableCommandComponent : Component, IBindableComponent
     {
-        public event EventHandler EventSourceComponentChanged;
-        public event EventHandler BindingContextChanged;
-        public event EventHandler CommandChanged;
+        public event EventHandler? EventSourceComponentChanged;
+        public event EventHandler? BindingContextChanged;
+        public event EventHandler? CommandChanged;
 
-        private BindingContext _bindingContext;
-        private ControlBindingsCollection _dataBindings;
-        private ICommand _command;
-        private Component _eventSourceComponent;
+        private BindingContext? _bindingContext;
+        private ControlBindingsCollection? _dataBindings;
+        private ICommand? _command;
+        private Component? _eventSourceComponent;
 
         public BindableCommandComponent()
         {
@@ -95,7 +97,7 @@ namespace WinFormsCommandBinding
         [Bindable(true),
          Browsable(false),
          DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public ICommand Command
+        public ICommand? Command
         {
             get => _command;
             set
@@ -108,7 +110,7 @@ namespace WinFormsCommandBinding
             }
         }
 
-        public Component EventSourceComponent
+        public Component? EventSourceComponent
         {
             get => _eventSourceComponent;
             set

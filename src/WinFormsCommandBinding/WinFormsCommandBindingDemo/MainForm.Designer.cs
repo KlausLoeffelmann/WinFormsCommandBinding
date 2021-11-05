@@ -61,7 +61,8 @@ namespace WinFormsCommandBindingDemo
             this.toolsToolStripMenuItem});
             this._mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this._mainMenuStrip.Name = "_mainMenuStrip";
-            this._mainMenuStrip.Size = new System.Drawing.Size(794, 28);
+            this._mainMenuStrip.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this._mainMenuStrip.Size = new System.Drawing.Size(992, 33);
             this._mainMenuStrip.TabIndex = 0;
             this._mainMenuStrip.Text = "menuStrip1";
             // 
@@ -72,14 +73,14 @@ namespace WinFormsCommandBindingDemo
             this.toolStripMenuItem1,
             this.quitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", this._mainFormControllerBindingSource, "NewCommand", true));
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(131, 26);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.newToolStripMenuItem.Text = "New...";
             // 
             // _mainFormControllerBindingSource
@@ -89,12 +90,12 @@ namespace WinFormsCommandBindingDemo
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(128, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(267, 6);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(131, 26);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.quitToolStripMenuItem.Text = "&Quit";
             // 
             // toolStripMenuItem3
@@ -102,13 +103,13 @@ namespace WinFormsCommandBindingDemo
             this.toolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.convertToUpperToolStripMenuItem});
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(49, 24);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(58, 29);
             this.toolStripMenuItem3.Text = "&Edit";
             // 
             // convertToUpperToolStripMenuItem
             // 
             this.convertToUpperToolStripMenuItem.Name = "convertToUpperToolStripMenuItem";
-            this.convertToUpperToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.convertToUpperToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.convertToUpperToolStripMenuItem.Text = "Convert to upper";
             // 
             // toolsToolStripMenuItem
@@ -117,36 +118,37 @@ namespace WinFormsCommandBindingDemo
             this.optionsToolStripMenuItem,
             this.toolStripMenuItem2});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(69, 29);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", this._mainFormControllerBindingSource, "ToolsOptionsCommand", true));
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.optionsToolStripMenuItem.Text = "&Options...";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(150, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(267, 6);
             // 
             // _statusStrip
             // 
             this._statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this._statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this._statusStrip.Location = new System.Drawing.Point(0, 573);
+            this._statusStrip.Location = new System.Drawing.Point(0, 717);
             this._statusStrip.Name = "_statusStrip";
-            this._statusStrip.Size = new System.Drawing.Size(794, 26);
+            this._statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 18, 0);
+            this._statusStrip.Size = new System.Drawing.Size(992, 32);
             this._statusStrip.TabIndex = 1;
             this._statusStrip.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(151, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(179, 25);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // _bindableCommandComponent
@@ -160,21 +162,23 @@ namespace WinFormsCommandBindingDemo
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this._mainFormControllerBindingSource, "TextDocument", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.textBox1.Location = new System.Drawing.Point(12, 31);
+            this.textBox1.Location = new System.Drawing.Point(15, 39);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(770, 525);
+            this.textBox1.Size = new System.Drawing.Size(962, 655);
             this.textBox1.TabIndex = 2;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(794, 599);
+            this.ClientSize = new System.Drawing.Size(992, 749);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this._statusStrip);
             this.Controls.Add(this._mainMenuStrip);
             this.MainMenuStrip = this._mainMenuStrip;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
