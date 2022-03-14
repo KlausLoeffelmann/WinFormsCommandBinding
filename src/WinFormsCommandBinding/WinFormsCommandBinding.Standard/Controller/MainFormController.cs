@@ -14,7 +14,7 @@ namespace WinFormsCommandBinding.Models
         private const string YesButton = "Yes";
         private const string NoButton = "No";
 
-        private string _textDocument;
+        private string? _textDocument;
 
         public MainFormController(IServiceProvider serviceProvider)
             : base(serviceProvider)
@@ -78,7 +78,7 @@ namespace WinFormsCommandBinding.Models
         private bool CanExecuteContentDependingCommands() 
             => TextDocument.Length > 0;
 
-        public string TextDocument
+        public string? TextDocument
         {
             get => _textDocument;
             set

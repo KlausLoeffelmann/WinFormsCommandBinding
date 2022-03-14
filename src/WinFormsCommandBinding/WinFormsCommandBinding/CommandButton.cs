@@ -3,8 +3,6 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-#nullable enable
-
 namespace WinFormsCommandBinding
 {
     public class CommandButton : Button

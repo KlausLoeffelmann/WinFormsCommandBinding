@@ -5,12 +5,15 @@ namespace WinFormsCommandBinding.Models
 {
     // Class implements INotifyPropertyChanged and simplifies it correct
     // handling over BindableBase by using [CallingMemberName]
+
+    // Note: This class does not get serialized in this demo, but the
+    // binding is working.
     public class OptionsFormController : BindableBase
     {
         private RelayCommand _okCommand;
 
         private bool _boolOption;
-        private string _textOption;
+        private string? _textOption;
         private int _numOption;
         private DateTime _dateOption;
 
@@ -41,7 +44,7 @@ namespace WinFormsCommandBinding.Models
             set => base.SetProperty(ref _boolOption, value);
         }
 
-        public string TextOption
+        public string? TextOption
         {
             get => _textOption;
             set => base.SetProperty(ref _textOption, value);
