@@ -80,7 +80,7 @@ namespace WinFormsCommandBindingDemo
             // 
             this.newToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", this._mainFormControllerBindingSource, "NewCommand", true));
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(161, 34);
             this.newToolStripMenuItem.Text = "New...";
             // 
             // _mainFormControllerBindingSource
@@ -90,12 +90,12 @@ namespace WinFormsCommandBindingDemo
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(267, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(158, 6);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(161, 34);
             this.quitToolStripMenuItem.Text = "&Quit";
             // 
             // toolStripMenuItem3
@@ -109,7 +109,7 @@ namespace WinFormsCommandBindingDemo
             // convertToUpperToolStripMenuItem
             // 
             this.convertToUpperToolStripMenuItem.Name = "convertToUpperToolStripMenuItem";
-            this.convertToUpperToolStripMenuItem.Size = new System.Drawing.Size(250, 34);
+            this.convertToUpperToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.convertToUpperToolStripMenuItem.Text = "Convert to upper";
             // 
             // toolsToolStripMenuItem

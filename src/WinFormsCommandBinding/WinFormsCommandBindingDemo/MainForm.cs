@@ -15,6 +15,7 @@ namespace WinFormsCommandBindingDemo
         {
             base.OnDataContextChanged(e);
             _mainFormControllerBindingSource.DataSource = e.DataContext;
+            
         }
 
         private void MainForm_AssignDataContext(object sender, DataContextEventArgs e)
