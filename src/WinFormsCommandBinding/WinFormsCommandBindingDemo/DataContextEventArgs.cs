@@ -4,11 +4,11 @@ namespace WinFormsCommandBindingDemo
 {
     public class DataContextEventArgs : EventArgs
     {
-        public DataContextEventArgs(object dataContext)
+        public DataContextEventArgs(object? dataContext)
         {
             DataContext = dataContext;
         }
 
-        public object DataContext { get; set; }
+        public object? DataContext { get; }
     }
 }

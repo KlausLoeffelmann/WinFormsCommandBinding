@@ -6,10 +6,6 @@ using WinFormsCommandBinding.Models.Service;
 
 namespace WinFormsCommandBindingDemo
 {
-    public interface IDataContextTarget
-    {
-        object DataContext { get; set; }
-    }
 
     public class WinFormsDialogService : IDialogService
     {
