@@ -10,13 +10,14 @@ namespace WinFormsCommandBindingDemo
             InitializeComponent();
         }
 
-        protected override void OnDataContextChanged(object dataContext)
+
+        protected override void OnDataContextChanged(DataContextEventArgs e)
         {
-            base.OnDataContextChanged(dataContext);
-            _mainFormControllerBindingSource.DataSource = dataContext;
+            base.OnDataContextChanged(e);
+            _mainFormControllerBindingSource.DataSource = e.DataContext;
         }
 
-        private void MainForm_AssignDataContext(object sender, DataContextEventArgs e) 
+        private void MainForm_AssignDataContext(object sender, DataContextEventArgs e)
             => _mainFormControllerBindingSource.DataSource = e.DataContext;
     }
 }
