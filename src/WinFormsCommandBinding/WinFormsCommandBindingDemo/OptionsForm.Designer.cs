@@ -149,7 +149,7 @@ namespace WinFormsCommandBindingDemo
             this.Name = "OptionsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "OptionsForm";
-            this.AssignDataContext += new System.EventHandler<WinFormsCommandBindingDemo.DataContextEventArgs>(this.OptionsForm_AssignDataContext);
+            this.DataContextChanged += new System.EventHandler<WinFormsCommandBindingDemo.DataContextEventArgs>(this.OptionsForm_AssignDataContext);
             ((System.ComponentModel.ISupportInitialize)(this._optionsFormControllerBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
