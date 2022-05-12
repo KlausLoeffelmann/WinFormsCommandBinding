@@ -1,5 +1,6 @@
 ﻿using System;
 using WinFormsCommandBinding.Models.Service;
+using WinFormsCommandBindingDemo.Services;
 
 namespace WinFormsCommandBindingDemo
 {
@@ -7,9 +8,9 @@ namespace WinFormsCommandBindingDemo
     {
         public class SimpleServiceProvider : IServiceProvider
         {
-            private static IServiceProvider _instance;
+            private static IServiceProvider? _instance;
 
-            private IDialogService _winFormsDialogService;
+            private IDialogService? _winFormsDialogService;
 
             public object GetService(Type serviceType)
                 => serviceType switch

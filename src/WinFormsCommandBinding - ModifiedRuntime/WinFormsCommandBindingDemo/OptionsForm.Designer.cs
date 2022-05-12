@@ -47,6 +47,7 @@ namespace WinFormsCommandBindingDemo
             // _okButton
             // 
             this._okButton.DataBindings.Add(new System.Windows.Forms.Binding("Command", this._optionsFormControllerBindingSource, "OKCommand", true));
+            this._okButton.DataContext = null;
             this._okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this._okButton.Location = new System.Drawing.Point(233, 221);
             this._okButton.Name = "_okButton";
@@ -61,6 +62,7 @@ namespace WinFormsCommandBindingDemo
             // 
             // commandButton1
             // 
+            this.commandButton1.DataContext = null;
             this.commandButton1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.commandButton1.Location = new System.Drawing.Point(352, 221);
             this.commandButton1.Name = "commandButton1";
@@ -72,6 +74,7 @@ namespace WinFormsCommandBindingDemo
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.DataContext = null;
             this.label1.Location = new System.Drawing.Point(25, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 20);
@@ -82,6 +85,7 @@ namespace WinFormsCommandBindingDemo
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this._optionsFormControllerBindingSource, "BoolOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox1.DataContext = null;
             this.checkBox1.Location = new System.Drawing.Point(181, 60);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(145, 24);
@@ -92,6 +96,7 @@ namespace WinFormsCommandBindingDemo
             // textBox1
             // 
             this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this._optionsFormControllerBindingSource, "TextOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBox1.DataContext = null;
             this.textBox1.Location = new System.Drawing.Point(181, 12);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(284, 27);
@@ -100,6 +105,7 @@ namespace WinFormsCommandBindingDemo
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.DataContext = null;
             this.label2.Location = new System.Drawing.Point(25, 108);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(118, 20);
@@ -109,6 +115,7 @@ namespace WinFormsCommandBindingDemo
             // numericUpDown1
             // 
             this.numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this._optionsFormControllerBindingSource, "NumOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numericUpDown1.DataContext = null;
             this.numericUpDown1.Location = new System.Drawing.Point(181, 106);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(284, 27);
@@ -117,6 +124,7 @@ namespace WinFormsCommandBindingDemo
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.DataContext = null;
             this.label3.Location = new System.Drawing.Point(25, 158);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(118, 20);
@@ -126,6 +134,7 @@ namespace WinFormsCommandBindingDemo
             // dateTimePicker1
             // 
             this.dateTimePicker1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this._optionsFormControllerBindingSource, "NumOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.dateTimePicker1.DataContext = null;
             this.dateTimePicker1.Location = new System.Drawing.Point(181, 153);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(284, 27);
@@ -149,7 +158,7 @@ namespace WinFormsCommandBindingDemo
             this.Name = "OptionsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "OptionsForm";
-            this.AssignDataContext += new System.EventHandler<WinFormsCommandBindingDemo.DataContextEventArgs>(this.OptionsForm_AssignDataContext);
+            this.DataContextChanged += new System.EventHandler(this.OptionsForm_AssignDataContext);
             ((System.ComponentModel.ISupportInitialize)(this._optionsFormControllerBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);

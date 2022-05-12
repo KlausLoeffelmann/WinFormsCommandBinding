@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace WinFormsCommandBindingDemo
 {
-    public partial class MainForm : DataContextForm
+    public partial class MainForm : Form
     {
         public MainForm()
         {

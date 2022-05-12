@@ -2,6 +2,7 @@ using System;
 using System.Windows.Forms;
 using WinFormsCommandBinding.Models;
 using WinFormsCommandBinding.Models.Service;
+using WinFormsCommandBindingDemo.Services;
 
 namespace WinFormsCommandBindingDemo
 {
@@ -24,8 +25,11 @@ namespace WinFormsCommandBindingDemo
             };
 
             var serviceProvider=SimpleServiceProvider.GetInstance();
-            serviceProvider.GetRequiredService<WinFormsDialogService>().RegisterController(
-                typeof(OptionsFormController), typeof(OptionsForm));
+            serviceProvider
+                .GetRequiredService<WinFormsDialogService>()
+                .RegisterUIController(
+                    uiController: typeof(OptionsFormController), 
+                    viewAsForm: typeof(OptionsForm));
 
             Application.Run((Form)mainForm);
         }

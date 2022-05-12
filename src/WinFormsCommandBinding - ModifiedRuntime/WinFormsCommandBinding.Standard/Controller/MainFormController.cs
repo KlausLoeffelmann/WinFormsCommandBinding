@@ -11,8 +11,8 @@ namespace WinFormsCommandBinding.Models
         private RelayCommand _toUpperCommand;
         private RelayCommand _newCommand;
 
-        private const string YesButton = "Yes";
-        private const string NoButton = "No";
+        public const string YesButtonText = "Yes";
+        public const string NoButtonText = "No";
 
         private string? _textDocument;
 
@@ -30,7 +30,7 @@ namespace WinFormsCommandBinding.Models
             set => SetProperty(ref _toolsOptionsCommand, value);
         }
 
-        private void ExecuteToolsOptionCommand(object param)
+        private void ExecuteToolsOptionCommand(object? _)
         {
             var dialogService = ServiceProvider.GetRequiredService<IDialogService>();
             var optionsFormController = new OptionsFormController(ServiceProvider);
@@ -43,9 +43,9 @@ namespace WinFormsCommandBinding.Models
             set => SetProperty(ref _toUpperCommand, value);
         }
 
-        private void ExecuteToUpper(object param)
+        private void ExecuteToUpper(object? _)
         {
-            TextDocument = TextDocument.ToUpper();
+            TextDocument = TextDocument?.ToUpper();
         }
 
         public RelayCommand NewCommand
@@ -54,7 +54,7 @@ namespace WinFormsCommandBinding.Models
             set => SetProperty(ref _newCommand, value);
         }
 
-        private void ExecuteNew(object param)
+        private void ExecuteNew(object? _)
         {
             // So, this is how we control the UI via a Controller or ViewModel.
             // We get the required Service over the ServiceProvider, 
@@ -67,16 +67,16 @@ namespace WinFormsCommandBinding.Models
                 title: "New Document",
                 heading: "Do you want to create a new Document?",
                 message: "You are about to create a new Document. The old document will be erased, changes you made will be lost.",
-                buttons: new[] { YesButton, NoButton });
+                buttons: new[] { YesButtonText, NoButtonText });
 
-            if (buttonString == YesButton)
+            if (buttonString == YesButtonText)
             {
                 TextDocument = string.Empty;
             }
         }
 
-        private bool CanExecuteContentDependingCommands() 
-            => TextDocument.Length > 0;
+        private bool CanExecuteContentDependingCommands(object? parameter) 
+            => TextDocument?.Length > 0;
 
         public string? TextDocument
         {

@@ -22,7 +22,7 @@ namespace WinFormsCommandBinding.Models
         /// <summary>
         /// Event for property change notification.
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Checks if a property already matches a desired value.  Sets the property and notifies
@@ -34,7 +34,7 @@ namespace WinFormsCommandBinding.Models
         /// <param name="propertyName">Name of the property used to notify listeners.  This value
         /// is optional and can be provided automatically when invoked from compilers that support
         /// CallerMemberName.</param>
-        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string? propertyName = null)
         {
             if (object.Equals(storage, value))
             {
@@ -52,7 +52,7 @@ namespace WinFormsCommandBinding.Models
         /// <param name="propertyName">Name of the property used to notify listeners.  This value
         /// is optional and can be provided automatically when invoked from compilers that support
         /// <see cref="CallerMemberNameAttribute"/>.</param>
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) 
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) 
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

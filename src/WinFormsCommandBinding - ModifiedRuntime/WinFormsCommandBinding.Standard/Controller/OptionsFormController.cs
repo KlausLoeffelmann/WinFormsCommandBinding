@@ -31,12 +31,12 @@ namespace WinFormsCommandBinding.Models
             set => base.SetProperty(ref _okCommand, value);
         }
 
-        private void ExecuteOK(object param)
+        private void ExecuteOK(object? param)
         {
             Console.WriteLine($"Called ExecuteCommand, parameter: {param}");
         }
 
-        private bool CanExecuteOK() => _isDirty;
+        private bool CanExecuteOK(object? _) => _isDirty;
 
         public bool BoolOption
         {
@@ -62,7 +62,7 @@ namespace WinFormsCommandBinding.Models
             set => base.SetProperty(ref _dateOption, value);
         }
 
-        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
             if (!_isDirty)
