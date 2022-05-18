@@ -15,6 +15,8 @@ namespace WinFormsCommandBinding.Models
         public const string NoButtonText = "No";
 
         private string? _textDocument;
+        private int _selectionRow;
+        private int _selectionColumn;
 
         public MainFormController(IServiceProvider serviceProvider)
             : base(serviceProvider)
@@ -91,6 +93,18 @@ namespace WinFormsCommandBinding.Models
                     ToUpperCommand.RaiseCanExecuteChanged();
                 }
             }
+        }
+
+        public int SelectionRow
+        {
+            get => _selectionRow;
+            set => SetProperty(ref _selectionRow, value);
+        }
+
+        public int SelectionColumn
+        {
+            get => _selectionColumn;
+            set => SetProperty(ref _selectionColumn, value);
         }
     }
 }
