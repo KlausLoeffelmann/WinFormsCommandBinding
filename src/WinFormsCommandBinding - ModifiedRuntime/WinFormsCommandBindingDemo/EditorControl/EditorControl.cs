@@ -14,6 +14,11 @@ namespace WinFormsCommandBindingDemo
 
         public EditorControl() : base()
         {
+        }
+
+        protected override void OnBindingContextChanged(EventArgs e)
+        {
+            base.OnBindingContextChanged(e);
             UpdateSelectionInfo();
         }
 
@@ -37,8 +42,8 @@ namespace WinFormsCommandBindingDemo
 
         private void UpdateSelectionInfo()
         {
-            var tempSelectionRow = GetLineFromCharIndex(SelectionStart);
-            var tempSelectionColumn = SelectionStart - GetFirstCharIndexOfCurrentLine();
+            var tempSelectionRow = GetLineFromCharIndex(SelectionStart) + 1;
+            var tempSelectionColumn = (SelectionStart - GetFirstCharIndexOfCurrentLine()) + 1;
 
             if (tempSelectionRow != _selectionRow)
             {
@@ -64,7 +69,7 @@ namespace WinFormsCommandBindingDemo
         }
 
         [Bindable(BindableSupport.Yes)]
-        public int SelectionLine
+        public int SelectionRow
         {
             get => _selectionRow;
             set { }

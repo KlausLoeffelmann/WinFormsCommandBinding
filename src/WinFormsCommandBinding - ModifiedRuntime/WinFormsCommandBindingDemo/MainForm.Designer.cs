@@ -173,13 +173,13 @@ namespace WinFormsCommandBindingDemo
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this._editorSurface.DataBindings.Add(new System.Windows.Forms.Binding("SelectionColumn", this._mainFormControllerBindingSource, "SelectionColumn", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this._editorSurface.DataBindings.Add(new System.Windows.Forms.Binding("SelectionLine", this._mainFormControllerBindingSource, "SelectionRow", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this._editorSurface.DataBindings.Add(new System.Windows.Forms.Binding("SelectionRow", this._mainFormControllerBindingSource, "SelectionRow", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this._editorSurface.DataContext = null;
             this._editorSurface.Location = new System.Drawing.Point(12, 31);
             this._editorSurface.Multiline = true;
             this._editorSurface.Name = "_editorSurface";
             this._editorSurface.SelectionColumn = 0;
-            this._editorSurface.SelectionLine = 0;
+            this._editorSurface.SelectionRow = 0;
             this._editorSurface.Size = new System.Drawing.Size(770, 525);
             this._editorSurface.TabIndex = 2;
             this._editorSurface.DataContextChanged += new System.EventHandler(this.MainForm_DataContextChanged);
