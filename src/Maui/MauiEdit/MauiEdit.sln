@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiEdit", "MauiEdit\MauiEdit.csproj", "{8451BBBC-CD1F-4F83-A5C5-4B2EB557967D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsCommandBinding.Standard", "..\..\WinFormsCommandBinding - ModifiedRuntime\WinFormsCommandBinding.Standard\WinFormsCommandBinding.Standard.csproj", "{CBA44EDC-E108-458E-BFE2-FF6E4AF4DBF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{8451BBBC-CD1F-4F83-A5C5-4B2EB557967D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8451BBBC-CD1F-4F83-A5C5-4B2EB557967D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8451BBBC-CD1F-4F83-A5C5-4B2EB557967D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CBA44EDC-E108-458E-BFE2-FF6E4AF4DBF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBA44EDC-E108-458E-BFE2-FF6E4AF4DBF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBA44EDC-E108-458E-BFE2-FF6E4AF4DBF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBA44EDC-E108-458E-BFE2-FF6E4AF4DBF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

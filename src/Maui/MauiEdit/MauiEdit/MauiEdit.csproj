@@ -48,4 +48,14 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\WinFormsCommandBinding - ModifiedRuntime\WinFormsCommandBinding.Standard\WinFormsCommandBinding.Standard.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="OptionsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

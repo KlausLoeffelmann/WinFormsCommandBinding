@@ -8,16 +8,18 @@ namespace CommandBindingDemo.UnitTest.Services
         public event EventHandler<NavigationEventArgs>? NavigatedToRequested;
         public event EventHandler<ShowMessageBoxResultEventArgs>? ShowMessageBoxRequested;
 
-        public void NavigateTo(BindableBase registeredController, bool modalIfPossible = false)
+        public async Task NavigateToAsync(BindableBase registeredController, bool modalIfPossible = false)
         {
             NavigatedToRequested?.Invoke(
                 this,
                 new NavigationEventArgs(
                     registeredController,
                     modalIfPossible));
+
+            await Task.CompletedTask;
         }
 
-        public string ShowMessageBox(string title, string heading, string message, params string[] buttons)
+        public Task<string> ShowMessageBoxAsync(string title, string heading, string message, params string[] buttons)
         {
             ShowMessageBoxResultEventArgs eArgs = new();
             ShowMessageBoxRequested?.Invoke(this, eArgs);
@@ -27,7 +29,7 @@ namespace CommandBindingDemo.UnitTest.Services
                 throw new NullReferenceException("MessageBox test result can't be null.");
             }
 
-            return eArgs.ResultButtonText;
+            return Task.FromResult(eArgs.ResultButtonText);
         }
     }
 }

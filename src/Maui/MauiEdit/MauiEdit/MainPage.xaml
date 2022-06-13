@@ -2,40 +2,115 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiEdit.MainPage">
-			 
-    <ScrollView>
-        <VerticalStackLayout 
-            Spacing="25" 
-            Padding="30,0" 
-            VerticalOptions="Center">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-                
-            <Label 
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+    <Shell.TitleView>
+        <Grid Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
             
             <Label 
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+                Margin="20,0,0,0"
+                Text="WinForms/Maui Edit"
+                FontAttributes="Bold"
+                FontSize="32"/>
+            
+            <HorizontalStackLayout 
+                Grid.Column="1">
+                
+                <Button 
+                    Margin="0,0,10,0"
+                    Text="New..." 
+                    HeightRequest="40"/>
 
-            <Button 
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+                <Button 
+                    Margin="0,0,10,0"
+                    Text="To Upper" 
+                    HeightRequest="40"/>
 
-        </VerticalStackLayout>
-    </ScrollView>
- 
+                <Button 
+                    Margin="0,0,10,0"
+                    Text="Insert Demo Text" 
+                    HeightRequest="40"/>
+
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+
+    <Grid
+        Margin="0,20,0,10"
+        VerticalOptions="Fill"
+        HorizontalOptions="Fill">
+            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Editor 
+            Grid.ColumnSpan="2"
+            MinimumWidthRequest="2000"
+            AutoSize="Disabled"
+            Grid.Row="0"
+            Keyboard="Chat"
+            IsSpellCheckEnabled="True"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill"
+            FontFamily="Cascadia Code"
+            FontSize="18" />
+
+        <HorizontalStackLayout
+            Grid.Row="1"
+            Grid.Column="0"
+            HorizontalOptions="End"
+            VerticalOptions="End">
+
+            <Label 
+                Margin="0,0,10,0"
+                Text="Wrap after"
+                VerticalOptions="Center"/>
+
+            <Slider
+                Margin="0,0,10,0"
+                WidthRequest="200"
+                Maximum="200"
+                Minimum="20"
+                Value="60"/>
+
+            <Entry 
+                MinimumWidthRequest="40"
+                MaximumWidthRequest="60"
+                Margin="0,0,20,0"
+                Keyboard="Numeric"
+                Text="60"/>
+
+            <Label 
+                Margin="0,0,30,0"
+                Text="Characters"
+                VerticalOptions="Center" />
+
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout
+            Grid.Row="1"
+            Grid.Column="1"
+            HorizontalOptions="End">
+
+            <Label 
+                Margin="0,0,5,0"
+                Text="Row:"
+                VerticalOptions="Center"/>
+            
+            <Label 
+                Margin="10,0,5,0"
+                Text="Column:"
+                VerticalOptions="Center"/>
+
+        </HorizontalStackLayout>
+    </Grid>
 </ContentPage>
