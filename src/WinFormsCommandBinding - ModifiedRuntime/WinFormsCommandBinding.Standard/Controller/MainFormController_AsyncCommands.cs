@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using WinFormsCommandBinding.Models.Service;
 
 namespace WinFormsCommandBinding.Models
@@ -16,17 +15,16 @@ namespace WinFormsCommandBinding.Models
         public const string YesButtonText = "Yes";
         public const string NoButtonText = "No";
 
+        public AsyncRelayCommand NewAsyncCommand
+        {
+            get => _newAsyncCommand;
+            set => SetProperty(ref _newAsyncCommand, value);
+        }
+
         public AsyncRelayCommand ToolsOptionsAsyncCommand
         {
             get => _toolsOptionsAsyncCommand;
             set => SetProperty(ref _toolsOptionsAsyncCommand, value);
-        }
-
-        private async Task ExecuteToolsOptionAsync(object? _)
-        {
-            var dialogService = ServiceProvider.GetRequiredService<IDialogService>();
-            var optionsFormController = new OptionsFormController(ServiceProvider);
-            await dialogService.NavigateToAsync(optionsFormController, true);
         }
 
         public AsyncRelayCommand ToUpperAsyncCommand
@@ -35,10 +33,11 @@ namespace WinFormsCommandBinding.Models
             set => SetProperty(ref _toUpperAsyncCommand, value);
         }
 
-        public AsyncRelayCommand ToUpperCommandAsync
+        private async Task ExecuteToolsOptionAsync(object? _)
         {
-            get => _toUpperAsyncCommand;
-            set => SetProperty(ref _toUpperAsyncCommand, value);
+            var dialogService = ServiceProvider.GetRequiredService<IDialogService>();
+            var optionsFormController = new OptionsFormController(ServiceProvider);
+            await dialogService.NavigateToAsync(optionsFormController, true);
         }
 
         private async Task ExecuteToUpperAsync(object? _)
@@ -73,12 +72,6 @@ namespace WinFormsCommandBinding.Models
             });
 
             TextDocument = textTemp;
-        }
-
-        public AsyncRelayCommand NewAsyncCommand
-        {
-            get => _newAsyncCommand;
-            set => SetProperty(ref _newAsyncCommand, value);
         }
 
         private async Task ExecuteNewAsync(object? _)

@@ -28,7 +28,8 @@ namespace WinFormsCommandBinding.Models
             set
             {
                 var wasEmpty = String.IsNullOrEmpty(_textDocument);
-                base.SetProperty(ref _textDocument, value);
+                SetProperty(ref _textDocument, value);
+
                 if (wasEmpty ^ string.IsNullOrEmpty(_textDocument))
                 {
                     NewAsyncCommand.RaiseCanExecuteChanged();

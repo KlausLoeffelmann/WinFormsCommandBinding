@@ -8,13 +8,12 @@ using WinFormsCommandBinding.Models.Service;
 
 namespace WinFormsCommandBindingDemo.Services
 {
-
     public class WinFormsDialogService : IDialogService
     {
         private readonly Dictionary<Type, Type> _controllerFormTypeLookup = new();
 
-        private static WindowsFormsSynchronizationContext? s_winFormsSyncContext 
-            = SynchronizationContext.Current as WindowsFormsSynchronizationContext;
+        private static SynchronizationContext? s_winFormsSyncContext 
+            = SynchronizationContext.Current;
 
         public void RegisterUIController(Type uiController, Type viewAsForm)
         {

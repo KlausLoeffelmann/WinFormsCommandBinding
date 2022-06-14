@@ -6,7 +6,7 @@ namespace CommandBindingDemo.UnitTest
 {
     public class MainFormUiControllerTest
     {
-        internal const string SampleTextDocument = 
+        internal const string SampleTextDocument =
             @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
               quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
@@ -18,13 +18,13 @@ namespace CommandBindingDemo.UnitTest
         public async Task MainFormNewDocumentTest()
         {
             var service = SimpleTestServiceProvider.GetInstance();
-            var dialogService = (SimpleUnitTestDialogService?) service.GetService(typeof(IDialogService));
+            var dialogService = (SimpleUnitTestDialogService?)service.GetService(typeof(IDialogService));
             int dialogState = 0;
 
             Assert.NotNull(dialogService);
 
             MainFormController mainFormController = new(service);
-            
+
             // We clear the main document.
             mainFormController.TextDocument = string.Empty;
 
@@ -43,19 +43,19 @@ namespace CommandBindingDemo.UnitTest
 
             // We test the first time; our state machine returns "No" the first time.
             await mainFormController.NewAsyncCommand.ExecuteAsync(null);
-            Assert.Equal(SampleTextDocument,mainFormController.TextDocument);
+            Assert.Equal(SampleTextDocument, mainFormController.TextDocument);
 
             // We test the second time; our state machine returns "Yes" the first time.
             await mainFormController.NewAsyncCommand.ExecuteAsync(null);
-            Assert.Equal(SampleTextDocument, String.Empty);
+            Assert.Equal(String.Empty, mainFormController.TextDocument);
 
-            void DialogService_ShowMessageBoxRequested(object? sender, ShowMessageBoxResultEventArgs e) 
+            void DialogService_ShowMessageBoxRequested(object? sender, ShowMessageBoxResultEventArgs e)
                 => e.ResultButtonText = dialogState++ switch
-                    {
-                        0 => MainFormController.NoButtonText,
-                        1 => MainFormController.YesButtonText,
-                        _ => string.Empty
-                    };
+                {
+                    0 => MainFormController.NoButtonText,
+                    1 => MainFormController.YesButtonText,
+                    _ => string.Empty
+                };
         }
     }
 }
