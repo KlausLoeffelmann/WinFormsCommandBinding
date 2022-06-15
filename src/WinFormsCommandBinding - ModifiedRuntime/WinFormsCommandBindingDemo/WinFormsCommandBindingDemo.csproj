@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CommandTrackBar\CommandTrackBar.vbproj" />
     <ProjectReference Include="..\WinFormsCommandBinding.Standard\WinFormsCommandBinding.Standard.csproj" />
   </ItemGroup>
 
