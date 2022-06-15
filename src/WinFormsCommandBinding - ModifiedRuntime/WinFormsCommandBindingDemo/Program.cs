@@ -19,6 +19,10 @@ namespace WinFormsCommandBindingDemo
             Application.SetCompatibleTextRenderingDefault(false);
             
             var mainForm = new MainForm();
+
+            // We need a marshalling control.
+            WinFormsDialogService.RegisterWinFormsAsyncHelper(WinFormsAsyncHelper.GetInstance(mainForm));
+
             mainForm.DataContext = new MainFormController(SimpleServiceProvider.GetInstance())
             {
                 TextDocument = "Default text of text document."

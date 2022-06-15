@@ -8,12 +8,24 @@ using WinFormsCommandBinding.Models.Service;
 
 namespace WinFormsCommandBindingDemo.Services
 {
-    public class WinFormsDialogService : IDialogService
+    internal class WinFormsDialogService : IDialogService
     {
         private readonly Dictionary<Type, Type> _controllerFormTypeLookup = new();
 
         private static SynchronizationContext? s_winFormsSyncContext 
             = SynchronizationContext.Current;
+
+        private static WinFormsAsyncHelper? s_asyncHelper;
+
+        public static void RegisterWinFormsAsyncHelper(WinFormsAsyncHelper asyncHelper)
+        {
+            if (asyncHelper is null)
+            {
+                throw new ArgumentNullException(nameof(asyncHelper));
+            }
+
+            s_asyncHelper = asyncHelper;
+        }
 
         public void RegisterUIController(Type uiController, Type viewAsForm)
         {
@@ -39,10 +51,8 @@ namespace WinFormsCommandBindingDemo.Services
                     {
                         // Since the Buttons are supposed to be command-bound
                         // the ViewModel should know the dialog result via binding.
-                        await Task.Run(() =>
-                        {
-                            s_winFormsSyncContext!.Send(state => view.ShowDialog(), null);
-                        });
+                        await s_asyncHelper!.InvokeAsync(
+                            () => view.ShowDialog());
                     }
                     else
                     {
@@ -85,17 +95,10 @@ namespace WinFormsCommandBindingDemo.Services
 
             TaskDialogButton result;
 
-            result = await Task.Run<TaskDialogButton>(() =>
-            {
-                TaskDialogButton? innerResult = null;
-                s_winFormsSyncContext!.Send(state 
-                    => innerResult = TaskDialog.ShowDialog(mainDialogPage), null);
-
-                // We should be sure, that TaskDialog returned a button.
-                return innerResult!;
-            });
-
-            return result.Text!;
+            result = await s_asyncHelper!.InvokeAsync(
+                () => TaskDialog.ShowDialog(mainDialogPage));
+            
+            return result.ToString();
         }
     }
 }
