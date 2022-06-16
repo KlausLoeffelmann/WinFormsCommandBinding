@@ -113,7 +113,9 @@ namespace WinFormsCommandBinding.Models
             do
             {
                 if (span[i++] == '\n')
+                {
                     lineNumber--;
+                }
 
             } while (i < span.Length && lineNumber > 0);
 
@@ -122,21 +124,20 @@ namespace WinFormsCommandBinding.Models
 
         private async Task ExecuteRewrapAsync(object? _)
         {
-            if (String.IsNullOrEmpty(TextDocument) ||
-                (SelectionLines.StartLine == SelectionLines.EndLine))
+            if (String.IsNullOrEmpty(TextDocument))
                 return;
 
             TextDocument = await Task.Run<string>(() =>
             {
                 var tmpDoc = TextDocument.Replace("\r\n", "\n");
 
-                var firstPartEndPos = CharPosFromLineNumber(tmpDoc, SelectionLines.StartLine-1);
+                var firstPartEndPos = CharPosFromLineNumber(tmpDoc, SelectionLines.StartLine - 1);
                 var wrapPartEndPos = CharPosFromLineNumber(tmpDoc, SelectionLines.EndLine);
                 var lastPartEndPos = tmpDoc.Length;
 
-                string firstPart = tmpDoc[0..(firstPartEndPos==-1 ? 0 : firstPartEndPos)];
+                string firstPart = tmpDoc[0..(firstPartEndPos == -1 ? 0 : firstPartEndPos)];
                 string wrapPart = tmpDoc[(firstPartEndPos == -1 ? 0 : firstPartEndPos)..wrapPartEndPos];
-                string lastPart = tmpDoc[(wrapPartEndPos == lastPartEndPos ? lastPartEndPos : wrapPartEndPos + 1)..lastPartEndPos];
+                string lastPart = tmpDoc[(wrapPartEndPos == lastPartEndPos ? lastPartEndPos : wrapPartEndPos)..lastPartEndPos];
 
                 // wrapping wrapPart
                 StringBuilder wrappedPart = new(wrapPart.Length);
