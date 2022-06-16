@@ -6,14 +6,6 @@ namespace CommandBindingDemo.UnitTest
 {
     public class MainFormUiControllerTest
     {
-        internal const string SampleTextDocument =
-            @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
-              fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa 
-              qui officia deserunt mollit anim id est laborum.";
-
         [Fact]
         public async Task MainFormNewDocumentTest()
         {
@@ -32,7 +24,7 @@ namespace CommandBindingDemo.UnitTest
             Assert.False(mainFormController.NewAsyncCommand.CanExecute(null));
 
             // We assign a new document.
-            mainFormController.TextDocument = SampleTextDocument;
+            mainFormController.TextDocument = MainFormController.SampleTextDocument;
 
             // We assert, that the New command is enabl;ed, and _can_ be called.
             Assert.True(mainFormController.NewAsyncCommand.CanExecute(null));
@@ -43,7 +35,7 @@ namespace CommandBindingDemo.UnitTest
 
             // We test the first time; our state machine returns "No" the first time.
             await mainFormController.NewAsyncCommand.ExecuteAsync(null);
-            Assert.Equal(SampleTextDocument, mainFormController.TextDocument);
+            Assert.Equal(MainFormController.SampleTextDocument, mainFormController.TextDocument);
 
             // We test the second time; our state machine returns "Yes" the first time.
             await mainFormController.NewAsyncCommand.ExecuteAsync(null);

@@ -23,11 +23,6 @@ namespace WinFormsCommandBindingDemo
             // We need a marshalling control.
             WinFormsDialogService.RegisterWinFormsAsyncHelper(WinFormsAsyncHelper.GetInstance(mainForm));
 
-            mainForm.DataContext = new MainFormController(SimpleServiceProvider.GetInstance())
-            {
-                TextDocument = "Default text of text document."
-            };
-
             var serviceProvider=SimpleServiceProvider.GetInstance();
             serviceProvider
                 .GetRequiredService<WinFormsDialogService>()
@@ -35,7 +30,7 @@ namespace WinFormsCommandBindingDemo
                     uiController: typeof(OptionsFormController), 
                     viewAsForm: typeof(OptionsForm));
 
-            Application.Run((Form)mainForm);
+            Application.Run(mainForm);
         }
     }
 }

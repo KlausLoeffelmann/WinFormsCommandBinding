@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using WinFormsCommandBinding.Models.Service;
 
 namespace WinFormsCommandBinding.Models
@@ -11,6 +14,7 @@ namespace WinFormsCommandBinding.Models
         private AsyncRelayCommand _newAsyncCommand;
         private AsyncRelayCommand _toUpperAsyncCommand;
         private AsyncRelayCommand _insertDemoTextAsyncCommand;
+        private AsyncRelayCommand _rewrapAsyncCommand;
 
         public const string YesButtonText = "Yes";
         public const string NoButtonText = "No";
@@ -31,6 +35,18 @@ namespace WinFormsCommandBinding.Models
         {
             get => _toUpperAsyncCommand;
             set => SetProperty(ref _toUpperAsyncCommand, value);
+        }
+
+        public AsyncRelayCommand InsertDemoTextAsyncCommand
+        {
+            get => _insertDemoTextAsyncCommand;
+            set => SetProperty(ref _insertDemoTextAsyncCommand, value);
+        }
+
+        public AsyncRelayCommand RewrapAsyncCommand
+        {
+            get => _rewrapAsyncCommand;
+            set => SetProperty(ref _rewrapAsyncCommand, value);
         }
 
         private async Task ExecuteToolsOptionAsync(object? _)
@@ -59,19 +75,8 @@ namespace WinFormsCommandBinding.Models
 
         private async Task ExecuteInsertDemoTextAsync(object? _)
         {
-            if (string.IsNullOrEmpty(_textDocument))
-            {
-                return;
-            }
-
-            string? textTemp = null;
-
-            await Task.Run(() =>
-            {
-                textTemp = TextDocument?.ToUpper();
-            });
-
-            TextDocument = textTemp;
+            TextDocument = SampleTextDocument;
+            await Task.CompletedTask;
         }
 
         private async Task ExecuteNewAsync(object? _)
@@ -93,6 +98,69 @@ namespace WinFormsCommandBinding.Models
             {
                 TextDocument = string.Empty;
             }
+        }
+
+        private static int CharPosFromLineNumber(string text, int lineNumber)
+        {
+            if (lineNumber == 0)
+            {
+                return 0;
+            }
+
+            var span = text.AsSpan();
+            int i = 0;
+
+            do
+            {
+                if (span[i++] == '\n')
+                    lineNumber--;
+
+            } while (i < span.Length && lineNumber > 0);
+
+            return i;
+        }
+
+        private async Task ExecuteRewrapAsync(object? _)
+        {
+            if (String.IsNullOrEmpty(TextDocument))
+                return;
+
+            TextDocument = await Task.Run<string>(() =>
+            {
+                var firstPartEndPos = CharPosFromLineNumber(TextDocument, SelectionLines.StartLine) - 1;
+                var wrapPartEndPos = CharPosFromLineNumber(TextDocument, SelectionLines.EndLine) - 1;
+                var lastPartEndPos = TextDocument.Length - 1;
+
+                // Splitting document up in first/rewrap/last part:
+                string firstPart = TextDocument[0..firstPartEndPos];
+                string wrapPart = TextDocument[(firstPartEndPos + 1)..wrapPartEndPos];
+                string lastPart = TextDocument[(wrapPartEndPos + 1)..lastPartEndPos];
+
+                // wrapping wrapPart
+                StringBuilder wrappedPart = new(wrapPart.Length);
+                wrapPart = wrapPart.Replace("\r\n", " ").Replace('\n', ' ');
+
+                int i = 0;
+                int lineCharCount = 0;
+                int lastPotentialWrapPos = 0;
+
+                while (i < wrapPart.Length)
+                {
+                    wrappedPart.Append(wrapPart[i]);
+                    if (wrapPart[i] == ' ' || wrapPart[i] == '-')
+                    {
+                        lastPotentialWrapPos = i++;
+                        if (lineCharCount++ > CharCountWrapThreshold)
+                        {
+                            wrappedPart[lastPotentialWrapPos] = '\r';
+                            wrappedPart.Insert(lastPotentialWrapPos + 1, '\n');
+                            lastPotentialWrapPos = 0;
+                        }
+                    }
+                }
+
+                return firstPart + wrappedPart.ToString() + lastPart;
+            });
         }
 
         private bool CanExecuteContentDependingCommands(object? parameter)
