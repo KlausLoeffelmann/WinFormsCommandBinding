@@ -75,8 +75,8 @@ namespace WinFormsCommandBindingDemo
             // _fileToolStripMenuItem
             // 
             this._fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._insertDemoTextToolStripMenuItem,
             this._newToolStripMenuItem,
+            this._insertDemoTextToolStripMenuItem,
             this.toolStripMenuItem1,
             this._quitToolStripMenuItem});
             this._fileToolStripMenuItem.Name = "_fileToolStripMenuItem";
@@ -197,7 +197,7 @@ namespace WinFormsCommandBindingDemo
             this._editorSurface.Name = "_editorSurface";
             this._editorSurface.SelectionColumn = 1;
             this._editorSurface.SelectionRow = 1;
-            this._editorSurface.Size = new System.Drawing.Size(962, 611);
+            this._editorSurface.Size = new System.Drawing.Size(962, 625);
             this._editorSurface.TabIndex = 2;
             this._editorSurface.DataContextChanged += new System.EventHandler(this.MainForm_DataContextChanged);
             // 
@@ -232,9 +232,10 @@ namespace WinFormsCommandBindingDemo
             // 
             // _charWrapThreshold
             // 
+            this._charWrapThreshold.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._charWrapThreshold.AutoSize = true;
             this._charWrapThreshold.DataBindings.Add(new System.Windows.Forms.Binding("Text", this._mainFormControllerBindingSource, "CharCountWrapThreshold", true));
-            this._charWrapThreshold.Location = new System.Drawing.Point(803, 43);
+            this._charWrapThreshold.Location = new System.Drawing.Point(808, 43);
             this._charWrapThreshold.Name = "_charWrapThreshold";
             this._charWrapThreshold.Size = new System.Drawing.Size(45, 25);
             this._charWrapThreshold.TabIndex = 5;
