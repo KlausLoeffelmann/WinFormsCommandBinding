@@ -102,9 +102,9 @@ namespace WinFormsCommandBinding.Models
 
         private static int CharPosFromLineNumber(string text, int lineNumber)
         {
-            if (lineNumber == 0)
+            if (lineNumber++ == -1)
             {
-                return 0;
+                return -1;
             }
 
             var span = text.AsSpan();
@@ -122,23 +122,25 @@ namespace WinFormsCommandBinding.Models
 
         private async Task ExecuteRewrapAsync(object? _)
         {
-            if (String.IsNullOrEmpty(TextDocument))
+            if (String.IsNullOrEmpty(TextDocument) ||
+                (SelectionLines.StartLine == SelectionLines.EndLine))
                 return;
 
             TextDocument = await Task.Run<string>(() =>
             {
-                var firstPartEndPos = CharPosFromLineNumber(TextDocument, SelectionLines.StartLine) - 1;
-                var wrapPartEndPos = CharPosFromLineNumber(TextDocument, SelectionLines.EndLine) - 1;
-                var lastPartEndPos = TextDocument.Length - 1;
+                var tmpDoc = TextDocument.Replace("\r\n", "\n");
 
-                // Splitting document up in first/rewrap/last part:
-                string firstPart = TextDocument[0..firstPartEndPos];
-                string wrapPart = TextDocument[(firstPartEndPos + 1)..wrapPartEndPos];
-                string lastPart = TextDocument[(wrapPartEndPos + 1)..lastPartEndPos];
+                var firstPartEndPos = CharPosFromLineNumber(tmpDoc, SelectionLines.StartLine-1);
+                var wrapPartEndPos = CharPosFromLineNumber(tmpDoc, SelectionLines.EndLine);
+                var lastPartEndPos = tmpDoc.Length;
+
+                string firstPart = tmpDoc[0..(firstPartEndPos==-1 ? 0 : firstPartEndPos)];
+                string wrapPart = tmpDoc[(firstPartEndPos == -1 ? 0 : firstPartEndPos)..wrapPartEndPos];
+                string lastPart = tmpDoc[(wrapPartEndPos == lastPartEndPos ? lastPartEndPos : wrapPartEndPos + 1)..lastPartEndPos];
 
                 // wrapping wrapPart
                 StringBuilder wrappedPart = new(wrapPart.Length);
-                wrapPart = wrapPart.Replace("\r\n", " ").Replace('\n', ' ');
+                wrapPart = wrapPart.Replace('\n', ' ');
 
                 int i = 0;
                 int lineCharCount = 0;
@@ -147,19 +149,22 @@ namespace WinFormsCommandBinding.Models
                 while (i < wrapPart.Length)
                 {
                     wrappedPart.Append(wrapPart[i]);
+
                     if (wrapPart[i] == ' ' || wrapPart[i] == '-')
                     {
-                        lastPotentialWrapPos = i++;
-                        if (lineCharCount++ > CharCountWrapThreshold)
-                        {
-                            wrappedPart[lastPotentialWrapPos] = '\r';
-                            wrappedPart.Insert(lastPotentialWrapPos + 1, '\n');
-                            lastPotentialWrapPos = 0;
-                        }
+                        lastPotentialWrapPos = i;
                     }
+
+                    if (lineCharCount++ > CharCountWrapThreshold)
+                    {
+                        wrappedPart[lastPotentialWrapPos] = '\n';
+                        lineCharCount = 0;
+                    }
+
+                    i++;
                 }
 
-                return firstPart + wrappedPart.ToString() + lastPart;
+                return (firstPart + wrappedPart.ToString() + "\n" + lastPart).Replace("\n", "\r\n");
             });
         }
 
