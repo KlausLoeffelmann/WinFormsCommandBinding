@@ -22,17 +22,26 @@
                 <Button 
                     Margin="0,0,10,0"
                     Text="New..." 
-                    HeightRequest="40"/>
-
-                <Button 
-                    Margin="0,0,10,0"
-                    Text="To Upper" 
-                    HeightRequest="40"/>
+                    HeightRequest="40"
+                    Command="{Binding NewAsyncCommand}"/>
 
                 <Button 
                     Margin="0,0,10,0"
                     Text="Insert Demo Text" 
-                    HeightRequest="40"/>
+                    HeightRequest="40"
+                    Command="{Binding InsertDemoTextAsyncCommand}"/>
+
+                <Button 
+                    Margin="0,0,10,0"
+                    Text="To upper" 
+                    HeightRequest="40"
+                    Command="{Binding ToUpperAsyncCommand}"/>
+
+                <Button 
+                    Margin="0,0,10,0"
+                    Text="Rewrap" 
+                    HeightRequest="40"
+                    Command="{Binding RewrapAsyncCommand}"/>
 
             </HorizontalStackLayout>
         </Grid>
@@ -53,6 +62,7 @@
         </Grid.ColumnDefinitions>
 
         <Editor 
+            x:Name="_editor"
             Grid.ColumnSpan="2"
             MinimumWidthRequest="2000"
             AutoSize="Disabled"
@@ -62,7 +72,9 @@
             HorizontalOptions="Fill"
             VerticalOptions="Fill"
             FontFamily="Cascadia Code"
-            FontSize="18" />
+            FontSize="18"
+            Text="{Binding TextDocument, Mode=TwoWay}"
+            CursorPosition="{Binding SelectionIndex, Mode=OneWayToSource}"/>
 
         <HorizontalStackLayout
             Grid.Row="1"
@@ -105,10 +117,20 @@
                 Margin="0,0,5,0"
                 Text="Row:"
                 VerticalOptions="Center"/>
-            
+
+            <Label 
+                Margin="0,0,5,0"
+                Text="{Binding SelectionRow}"
+                VerticalOptions="Center" />
+
             <Label 
                 Margin="10,0,5,0"
                 Text="Column:"
+                VerticalOptions="Center"/>
+
+            <Label 
+                Margin="0,0,5,0"
+                Text="{Binding SelectionColumn}"
                 VerticalOptions="Center"/>
 
         </HorizontalStackLayout>

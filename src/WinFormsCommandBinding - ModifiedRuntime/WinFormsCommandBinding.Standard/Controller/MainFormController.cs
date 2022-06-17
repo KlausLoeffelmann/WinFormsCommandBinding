@@ -12,13 +12,6 @@ namespace WinFormsCommandBinding.Models
         private int _selectionIndex;
         private int _charCountWrapThreshold = 60;
 
-        public const string SampleTextDocument =@"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-qui officia deserunt mollit anim id est laborum.";
-
         private (int StartLine, int EndLine) _selectionStartLine;
 
         public MainFormController(IServiceProvider serviceProvider)
@@ -27,8 +20,8 @@ qui officia deserunt mollit anim id est laborum.";
             _toolsOptionsAsyncCommand = new AsyncRelayCommand(ExecuteToolsOptionAsync);
             _newAsyncCommand = new AsyncRelayCommand(ExecuteNewAsync, CanExecuteContentDependingCommands);
             _toUpperAsyncCommand = new AsyncRelayCommand(ExecuteToUpperAsync, CanExecuteContentDependingCommands);
-            _insertDemoTextAsyncCommand = new AsyncRelayCommand(ExecuteInsertDemoTextAsync, CanExecuteContentDependingCommands);
-            _rewrapAsyncCommand = new AsyncRelayCommand(ExecuteRewrapAsync, CanExecuteContentDependingCommands);
+            _insertDemoTextAsyncCommand = new AsyncRelayCommand(ExecuteInsertDemoTextAsync);
+            _rewrapAsyncCommand = new AsyncRelayCommand(ExecuteRewrapAsync);
         }
 
         public string? TextDocument
@@ -68,13 +61,55 @@ qui officia deserunt mollit anim id est laborum.";
         public int SelectionIndex
         {
             get => _selectionIndex;
-            set => SetProperty(ref _selectionIndex, value);
+            set
+            {
+                SetProperty(ref _selectionIndex, value);
+                UpdateSelectionPosition();
+            }
         }
 
         public (int StartLine, int EndLine) SelectionLines
         {
             get => _selectionStartLine;
             set => SetProperty(ref _selectionStartLine, value);
+        }
+
+        private void UpdateSelectionPosition()
+        {
+            if (string.IsNullOrEmpty(TextDocument))
+            {
+                SelectionRow = 0;
+                SelectionColumn = 0;
+                return;
+            }
+
+            var tmpDoc = TextDocument.Replace("\r\n", "\r");
+            var crlf = "\r";
+
+            int count, lineOffset;
+            int previousPos = 0, pos = -crlf.Length;
+
+            // Count the lines:
+            for (count = 0; ; count++)
+            {
+                // When we completely at the right of the line, the previous pos is still it.
+                if (pos == SelectionIndex)
+                {
+                    lineOffset = 0;
+                }
+                else
+                {
+                    lineOffset = 1;
+                    previousPos = pos;
+                }
+                
+                pos = tmpDoc.IndexOf(crlf, pos + crlf.Length);
+                if (pos > SelectionIndex || pos == -1)
+                    break;
+            }
+
+            SelectionRow = count + lineOffset;
+            SelectionColumn = SelectionIndex - previousPos;
         }
     }
 }

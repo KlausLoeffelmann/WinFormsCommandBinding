@@ -75,7 +75,7 @@ namespace WinFormsCommandBinding.Models
 
         private async Task ExecuteInsertDemoTextAsync(object? _)
         {
-            TextDocument = SampleTextDocument;
+            TextDocument = GetTestText();
             await Task.CompletedTask;
         }
 
