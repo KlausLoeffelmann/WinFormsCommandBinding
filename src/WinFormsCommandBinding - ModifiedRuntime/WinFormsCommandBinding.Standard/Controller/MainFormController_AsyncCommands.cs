@@ -130,7 +130,7 @@ namespace WinFormsCommandBinding.Models
             {
                 var tmpDoc = TextDocument.Replace("\r\n", "\n");
 
-                var firstPartEndPos = CharPosFromLineNumber(tmpDoc, SelectionLines.StartLine - 1);
+                var firstPartEndPos = CharPosFromLineNumber(tmpDoc, SelectionLines.StartLine - 2);
                 var wrapPartEndPos = CharPosFromLineNumber(tmpDoc, SelectionLines.EndLine);
                 var lastPartEndPos = tmpDoc.Length;
 

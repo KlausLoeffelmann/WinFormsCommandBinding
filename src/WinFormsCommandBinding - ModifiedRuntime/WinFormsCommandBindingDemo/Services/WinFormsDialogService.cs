@@ -100,5 +100,10 @@ namespace WinFormsCommandBindingDemo.Services
             
             return result.ToString();
         }
+
+        public void SetMarshallingContext(object syncContext)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

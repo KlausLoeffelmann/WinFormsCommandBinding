@@ -19,6 +19,11 @@ namespace CommandBindingDemo.UnitTest.Services
             await Task.CompletedTask;
         }
 
+        public void SetMarshallingContext(object syncContext)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<string> ShowMessageBoxAsync(string title, string heading, string message, params string[] buttons)
         {
             ShowMessageBoxResultEventArgs eArgs = new();

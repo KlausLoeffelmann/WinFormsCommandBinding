@@ -7,15 +7,10 @@ namespace WinFormsCommandBindingDemo
 {
     internal class EditorControl : TextBox
     {
-        public event EventHandler? SelectionColumnChanged;
-        public event EventHandler? SelectionRowChanged;
-        public event EventHandler? SelectedLinesChanged;
+        public event EventHandler? SelectionLengthChanged;
+        public event EventHandler? CursorPositionChanged;
 
-        private int _selectionRow;
-        private int _selectionColumn;
-
-        private SelectedLines _selectedLines;
-        private SelectedLines? _previousSelectedLines;
+        private int _cursorPosition;
 
         public EditorControl() : base()
         {
@@ -65,60 +60,40 @@ namespace WinFormsCommandBindingDemo
 
         private void UpdateSelectionInfo()
         {
-            var tempSelectionRowStart = GetLineFromCharIndex(SelectionStart) + 1;
-            var tempSelectionRowEnd = GetLineFromCharIndex(SelectionStart + SelectionLength + 1);
-
-            var tempSelectionColumn = (SelectionStart - GetFirstCharIndexOfCurrentLine()) + 1;
-
-            if (tempSelectionRowStart != _selectionRow)
-            {
-                _selectionRow = tempSelectionRowStart;
-                OnSelectionRowChanged(EventArgs.Empty);
-            }
-
-            if (tempSelectionColumn != _selectionColumn)
-            {
-                _selectionColumn = tempSelectionColumn;
-                OnSelectionColumnChanged(EventArgs.Empty);
-            }
-
-            _selectedLines = SelectedLines.GetFromTextBox(this);
-
-            if (!Equals(_previousSelectedLines, _selectedLines))
-            {
-                _previousSelectedLines = _selectedLines;
-                OnSelectedLinesChanges(EventArgs.Empty);
-            }
-        }
-
-        protected virtual void OnSelectionRowChanged(EventArgs e) 
-            => SelectionRowChanged?.Invoke(this, e);
-
-        protected virtual void OnSelectionColumnChanged(EventArgs e) 
-            => SelectionColumnChanged?.Invoke(this, e);
-
-        protected virtual void OnSelectedLinesChanges(EventArgs e) 
-            => SelectedLinesChanged?.Invoke(this, e);
-
-        [Bindable(BindableSupport.Yes)]
-        public SelectedLines SelectedLines
-        {
-            get => _selectedLines;
-            set { }
+            CursorPosition = this.SelectionStart;
+            OnSelectionLengthChanged(EventArgs.Empty);
         }
 
         [Bindable(BindableSupport.Yes)]
-        public int SelectionRow
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Browsable(false)]
+        public int CursorPosition
         {
-            get => _selectionRow;
-            set { }
+            get => _cursorPosition;
+            set
+            {
+                _cursorPosition = value;
+                OnCursorPositionChanged(EventArgs.Empty);
+            }
         }
 
         [Bindable(BindableSupport.Yes)]
-        public int SelectionColumn
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Browsable(false)]
+        public new int SelectionLength
         {
-            get => _selectionColumn;
+            get => base.SelectionLength;
+
+            // We emulate OneWayToSource binding by ignoring the setter.
+            // But to trigger the value change, we call OnSelectionLengthChanged
+            // from UpdateSelectionInfo.
             set { }
         }
+
+        protected virtual void OnSelectionLengthChanged(EventArgs e)
+            => SelectionLengthChanged?.Invoke(this, e);
+
+        protected virtual void OnCursorPositionChanged(EventArgs e)
+            => CursorPositionChanged?.Invoke(this, e);
     }
 }

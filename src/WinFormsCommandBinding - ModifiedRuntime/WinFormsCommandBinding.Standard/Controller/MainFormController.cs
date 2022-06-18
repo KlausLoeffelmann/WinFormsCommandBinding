@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace WinFormsCommandBinding.Models
 {
@@ -10,9 +11,11 @@ namespace WinFormsCommandBinding.Models
         private int _selectionRow;
         private int _selectionColumn;
         private int _selectionIndex;
+        private int _selectionLength;
+
         private int _charCountWrapThreshold = 60;
 
-        private (int StartLine, int EndLine) _selectionStartLine;
+        private (int StartLine, int EndLine) _selectionLines;
 
         public MainFormController(IServiceProvider serviceProvider)
             : base(serviceProvider)
@@ -64,27 +67,41 @@ namespace WinFormsCommandBinding.Models
             set
             {
                 SetProperty(ref _selectionIndex, value);
-                UpdateSelectionPosition();
+                (SelectionRow, SelectionColumn) = GetRowAndColumnFromPosition(_selectionIndex);
+            }
+        }
+
+        public int SelectionLength
+        {
+            get => _selectionLength;
+            set
+            {
+                SetProperty(ref _selectionLength, value);
+
+                SelectionLines = (
+                    SelectionRow,
+                    GetRowAndColumnFromPosition(_selectionIndex + _selectionLength).Row);
             }
         }
 
         public (int StartLine, int EndLine) SelectionLines
         {
-            get => _selectionStartLine;
-            set => SetProperty(ref _selectionStartLine, value);
+            get => _selectionLines;
+            set
+            {
+                SetProperty(ref _selectionLines, value);
+                Debug.Print($"SelectionLine: {_selectionLines}");
+            }
         }
 
-        private void UpdateSelectionPosition()
+        private (int Row, int Column) GetRowAndColumnFromPosition(int position)
         {
             if (string.IsNullOrEmpty(TextDocument))
             {
-                SelectionRow = 0;
-                SelectionColumn = 0;
-                return;
+                return (1, 1);
             }
 
-            var tmpDoc = TextDocument.Replace("\r\n", "\r");
-            var crlf = "\r";
+            var crlf = "\r\n";
 
             int count, lineOffset;
             int previousPos = 0, pos = -crlf.Length;
@@ -93,7 +110,7 @@ namespace WinFormsCommandBinding.Models
             for (count = 0; ; count++)
             {
                 // When we completely at the right of the line, the previous pos is still it.
-                if (pos == SelectionIndex)
+                if (pos == position)
                 {
                     lineOffset = 0;
                 }
@@ -102,14 +119,16 @@ namespace WinFormsCommandBinding.Models
                     lineOffset = 1;
                     previousPos = pos;
                 }
-                
-                pos = tmpDoc.IndexOf(crlf, pos + crlf.Length);
-                if (pos > SelectionIndex || pos == -1)
+
+                pos = TextDocument.IndexOf(crlf, pos + crlf.Length);
+                if (pos > position || pos == -1)
                     break;
             }
 
-            SelectionRow = count + lineOffset;
-            SelectionColumn = SelectionIndex - previousPos;
+            var row = count + lineOffset;
+            var column = (position - 1) - previousPos;
+
+            return (row, column);
         }
     }
 }

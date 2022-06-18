@@ -24,7 +24,7 @@ namespace CommandBindingDemo.UnitTest
             Assert.False(mainFormController.NewAsyncCommand.CanExecute(null));
 
             // We assign a new document.
-            mainFormController.TextDocument = MainFormController.SampleTextDocument;
+            mainFormController.TextDocument = MainFormController.GetTestText();
 
             // We assert, that the New command is enabl;ed, and _can_ be called.
             Assert.True(mainFormController.NewAsyncCommand.CanExecute(null));
@@ -35,7 +35,7 @@ namespace CommandBindingDemo.UnitTest
 
             // We test the first time; our state machine returns "No" the first time.
             await mainFormController.NewAsyncCommand.ExecuteAsync(null);
-            Assert.Equal(MainFormController.SampleTextDocument, mainFormController.TextDocument);
+            Assert.Equal(MainFormController.GetTestText(), mainFormController.TextDocument);
 
             // We test the second time; our state machine returns "Yes" the first time.
             await mainFormController.NewAsyncCommand.ExecuteAsync(null);

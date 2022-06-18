@@ -11,9 +11,6 @@ namespace WinFormsCommandBindingDemo
         public MainForm()
         {
             InitializeComponent();
-            var selectedLinesbindings = _editorSurface.DataBindings[nameof(EditorControl.SelectedLines)];
-            selectedLinesbindings.Parse += SelectedLinesbindings_Parse;
-            selectedLinesbindings.Format += SelectedLinesbindings_Format;
         }
 
         // We're emulating a converter: Convert.From (View->ViewModel).

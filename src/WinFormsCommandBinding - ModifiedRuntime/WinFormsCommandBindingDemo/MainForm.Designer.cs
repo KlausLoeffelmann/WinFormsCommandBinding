@@ -34,9 +34,9 @@ namespace WinFormsCommandBindingDemo
             this.components = new System.ComponentModel.Container();
             this._mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this._fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._insertDemoTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._mainFormControllerBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this._newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._mainFormControllerBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this._insertDemoTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this._quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,23 +83,23 @@ namespace WinFormsCommandBindingDemo
             this._fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
             this._fileToolStripMenuItem.Text = "&File";
             // 
-            // _insertDemoTextToolStripMenuItem
-            // 
-            this._insertDemoTextToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", this._mainFormControllerBindingSource, "InsertDemoTextAsyncCommand", true));
-            this._insertDemoTextToolStripMenuItem.Name = "_insertDemoTextToolStripMenuItem";
-            this._insertDemoTextToolStripMenuItem.Size = new System.Drawing.Size(244, 34);
-            this._insertDemoTextToolStripMenuItem.Text = "&Insert demo text";
-            // 
-            // _mainFormControllerBindingSource
-            // 
-            this._mainFormControllerBindingSource.DataSource = typeof(WinFormsCommandBinding.Models.MainFormController);
-            // 
             // _newToolStripMenuItem
             // 
             this._newToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", this._mainFormControllerBindingSource, "NewAsyncCommand", true));
             this._newToolStripMenuItem.Name = "_newToolStripMenuItem";
             this._newToolStripMenuItem.Size = new System.Drawing.Size(244, 34);
             this._newToolStripMenuItem.Text = "New...";
+            // 
+            // _mainFormControllerBindingSource
+            // 
+            this._mainFormControllerBindingSource.DataSource = typeof(WinFormsCommandBinding.Models.MainFormController);
+            // 
+            // _insertDemoTextToolStripMenuItem
+            // 
+            this._insertDemoTextToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", this._mainFormControllerBindingSource, "InsertDemoTextAsyncCommand", true));
+            this._insertDemoTextToolStripMenuItem.Name = "_insertDemoTextToolStripMenuItem";
+            this._insertDemoTextToolStripMenuItem.Size = new System.Drawing.Size(244, 34);
+            this._insertDemoTextToolStripMenuItem.Text = "&Insert demo text";
             // 
             // toolStripMenuItem1
             // 
@@ -187,16 +187,13 @@ namespace WinFormsCommandBindingDemo
             this._editorSurface.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._editorSurface.DataBindings.Add(new System.Windows.Forms.Binding("SelectedLines", this._mainFormControllerBindingSource, "SelectionLines", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this._editorSurface.DataBindings.Add(new System.Windows.Forms.Binding("SelectionColumn", this._mainFormControllerBindingSource, "SelectionColumn", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this._editorSurface.DataBindings.Add(new System.Windows.Forms.Binding("SelectionRow", this._mainFormControllerBindingSource, "SelectionRow", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this._editorSurface.DataBindings.Add(new System.Windows.Forms.Binding("CursorPosition", this._mainFormControllerBindingSource, "SelectionIndex", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this._editorSurface.DataBindings.Add(new System.Windows.Forms.Binding("SelectionLength", this._mainFormControllerBindingSource, "SelectionLength", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this._editorSurface.DataBindings.Add(new System.Windows.Forms.Binding("Text", this._mainFormControllerBindingSource, "TextDocument", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this._editorSurface.Location = new System.Drawing.Point(15, 82);
             this._editorSurface.Margin = new System.Windows.Forms.Padding(4);
             this._editorSurface.Multiline = true;
             this._editorSurface.Name = "_editorSurface";
-            this._editorSurface.SelectionColumn = 1;
-            this._editorSurface.SelectionRow = 1;
             this._editorSurface.Size = new System.Drawing.Size(962, 625);
             this._editorSurface.TabIndex = 2;
             this._editorSurface.DataContextChanged += new System.EventHandler(this.MainForm_DataContextChanged);
