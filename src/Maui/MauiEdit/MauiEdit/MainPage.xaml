@@ -71,10 +71,24 @@
             IsSpellCheckEnabled="True"
             HorizontalOptions="Fill"
             VerticalOptions="Fill"
-            FontFamily="Cascadia Code"
-            FontSize="18"
             Text="{Binding TextDocument, Mode=TwoWay}"
-            CursorPosition="{Binding SelectionIndex, Mode=OneWayToSource}"/>
+            CursorPosition="{Binding SelectionIndex, Mode=OneWayToSource}"
+            SelectionLength="{Binding SelectionLength, Mode=OneWayToSource}">
+
+            <Editor.FontFamily>
+                <OnPlatform x:TypeArguments="x:String">
+                    <On Platform="Windows" Value="Cascadia Code"/>
+                    <On Platform="Android" Value="Droid Sans Mono"/>
+                </OnPlatform>
+            </Editor.FontFamily>
+
+            <Editor.FontSize>
+                <OnPlatform x:TypeArguments="x:Double">
+                    <On Platform="Windows" Value="18"/>
+                    <On Platform="Android" Value="24"/>
+                </OnPlatform>
+            </Editor.FontSize>
+        </Editor>
 
         <HorizontalStackLayout
             Grid.Row="1"
@@ -90,22 +104,21 @@
             <Slider
                 Margin="0,0,10,0"
                 WidthRequest="200"
-                Maximum="200"
+                Maximum="120"
                 Minimum="20"
-                Value="60"/>
+                Value="{Binding CharCountWrapThreshold, Mode=TwoWay}"/>
 
             <Entry 
                 MinimumWidthRequest="40"
                 MaximumWidthRequest="60"
                 Margin="0,0,20,0"
                 Keyboard="Numeric"
-                Text="60"/>
+                Text="{Binding CharCountWrapThreshold}"/>
 
             <Label 
                 Margin="0,0,30,0"
                 Text="Characters"
                 VerticalOptions="Center" />
-
         </HorizontalStackLayout>
 
         <HorizontalStackLayout

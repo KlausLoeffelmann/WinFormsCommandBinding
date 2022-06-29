@@ -87,7 +87,7 @@ namespace WinFormsCommandBindingDemo
             // 
             this._newToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", this._mainFormControllerBindingSource, "NewAsyncCommand", true));
             this._newToolStripMenuItem.Name = "_newToolStripMenuItem";
-            this._newToolStripMenuItem.Size = new System.Drawing.Size(244, 34);
+            this._newToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this._newToolStripMenuItem.Text = "New...";
             // 
             // _mainFormControllerBindingSource
@@ -98,18 +98,18 @@ namespace WinFormsCommandBindingDemo
             // 
             this._insertDemoTextToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", this._mainFormControllerBindingSource, "InsertDemoTextAsyncCommand", true));
             this._insertDemoTextToolStripMenuItem.Name = "_insertDemoTextToolStripMenuItem";
-            this._insertDemoTextToolStripMenuItem.Size = new System.Drawing.Size(244, 34);
+            this._insertDemoTextToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this._insertDemoTextToolStripMenuItem.Text = "&Insert demo text";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(241, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(267, 6);
             // 
             // _quitToolStripMenuItem
             // 
             this._quitToolStripMenuItem.Name = "_quitToolStripMenuItem";
-            this._quitToolStripMenuItem.Size = new System.Drawing.Size(244, 34);
+            this._quitToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this._quitToolStripMenuItem.Text = "&Quit";
             // 
             // toolStripMenuItem3

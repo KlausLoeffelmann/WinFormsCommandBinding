@@ -39,10 +39,7 @@ namespace WinFormsCommandBindingDemo
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            DataContext = new MainFormController(SimpleServiceProvider.GetInstance())
-            {
-                TextDocument = "Default text of text document."
-            };
+            DataContext = new MainFormController(SimpleServiceProvider.GetInstance());
         }
 
         private void MainForm_DataContextChanged(object sender, EventArgs e)

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace WinFormsCommandBindingDemo
 {

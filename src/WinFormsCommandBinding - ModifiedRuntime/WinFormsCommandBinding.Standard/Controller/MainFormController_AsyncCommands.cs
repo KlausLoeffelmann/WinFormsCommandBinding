@@ -99,48 +99,26 @@ namespace WinFormsCommandBinding.Models
             }
         }
 
-        private static int CharPosFromLineNumber(string text, int lineNumber)
-        {
-            if (lineNumber++ == -1)
-            {
-                return -1;
-            }
-
-            var span = text.AsSpan();
-            int i = 0;
-
-            do
-            {
-                if (span[i++] == '\n')
-                {
-                    lineNumber--;
-                }
-
-            } while (i < span.Length && lineNumber > 0);
-
-            return i;
-        }
-
         private async Task ExecuteRewrapAsync(object? _)
         {
             if (String.IsNullOrEmpty(TextDocument))
                 return;
 
+            var cursorPos = SelectionIndex;
+
             TextDocument = await Task.Run<string>(() =>
             {
-                var tmpDoc = TextDocument.Replace("\r\n", "\n");
+                var firstPartEndPos = CharPosFromLineNumber(SelectionLines.StartLine - 1);
+                var wrapPartEndPos = CharPosFromLineNumber(SelectionLines.EndLine);
+                var lastPartEndPos = TextDocument.Length;
 
-                var firstPartEndPos = CharPosFromLineNumber(tmpDoc, SelectionLines.StartLine - 2);
-                var wrapPartEndPos = CharPosFromLineNumber(tmpDoc, SelectionLines.EndLine);
-                var lastPartEndPos = tmpDoc.Length;
+                string firstPart = TextDocument[0..(firstPartEndPos == -1 ? 0 : firstPartEndPos)];
+                string wrapPart = TextDocument[(firstPartEndPos == -1 ? 0 : firstPartEndPos)..wrapPartEndPos];
+                string lastPart = TextDocument[(wrapPartEndPos == lastPartEndPos ? lastPartEndPos : wrapPartEndPos)..lastPartEndPos];
 
-                string firstPart = tmpDoc[0..(firstPartEndPos == -1 ? 0 : firstPartEndPos)];
-                string wrapPart = tmpDoc[(firstPartEndPos == -1 ? 0 : firstPartEndPos)..wrapPartEndPos];
-                string lastPart = tmpDoc[(wrapPartEndPos == lastPartEndPos ? lastPartEndPos : wrapPartEndPos)..lastPartEndPos];
-
-                // wrapping wrapPart
+                // Wrapping just the wrapPart.
                 StringBuilder wrappedPart = new(wrapPart.Length);
-                wrapPart = wrapPart.Replace('\n', ' ');
+                wrapPart = wrapPart.Replace(CarriageReturn, " ").Replace("  ", " ");
 
                 int i = 0;
                 int lineCharCount = 0;
@@ -157,15 +135,22 @@ namespace WinFormsCommandBinding.Models
 
                     if (lineCharCount++ > CharCountWrapThreshold)
                     {
-                        wrappedPart[lastPotentialWrapPos] = '\n';
+                        wrappedPart[lastPotentialWrapPos] = '\r';
                         lineCharCount = 0;
                     }
 
                     i++;
                 }
 
-                return (firstPart + wrappedPart.ToString() + "\n" + lastPart).Replace("\n", "\r\n");
+                if (CarriageReturn != "\r")
+                {
+                    wrappedPart = wrappedPart.Replace("\r", CarriageReturn);
+                }
+
+                return (firstPart + wrappedPart.ToString() + CarriageReturn + lastPart);
             });
+
+            SelectionIndex = cursorPos;
         }
 
         private bool CanExecuteContentDependingCommands(object? parameter)

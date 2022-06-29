@@ -11,37 +11,37 @@ namespace MauiEdit;
 public partial class MainPage : ContentPage
 {
 #if ANDROID
-    private Timer _timer;
+	private Timer? _timer;
 #endif
 
 	partial void InitializePlatformDependentComponent()
 	{
-        _editor.HandlerChanged += Editor_HandlerChanged;
+		_editor.HandlerChanged += Editor_HandlerChanged;
 #if ANDROID
-        _timer = new Timer(TimerCallback, null, 0, 200);
+		_timer = new Timer(TimerCallback, null, 0, 200);
 #endif
 	}
 
 #if ANDROID
-    private void TimerCallback(object state)
+	private void TimerCallback(object? state)
 	{
 		if (_editor.Handler?.PlatformView is AppCompatEditText editor)
 		{
-			_editor.CursorPosition=editor.SelectionStart;
+			_editor.CursorPosition = editor.SelectionStart;
 			_editor.SelectionLength = editor.SelectionEnd - editor.SelectionStart;
 		}
-    }
+	}
 #endif
 
-    private void Editor_HandlerChanged(object sender, EventArgs e)
+	private void Editor_HandlerChanged(object? sender, EventArgs e)
 	{
-		var editor=(Editor)sender;
+		var editor = (Editor)sender!;
 		var editorHandler = editor.Handler;
 
 #if WINDOWS
-		TextBox platformView = (TextBox) editorHandler.PlatformView;
+		TextBox nativeTextBox = (TextBox) editorHandler!.PlatformView!;
 
-		platformView.SelectionChanged += (sender, eArgs)=>
+		nativeTextBox.SelectionChanged += (sender, eArgs)=>
 		{
 			var textBox = (Microsoft.UI.Xaml.Controls.TextBox)sender;
 			_editor.CursorPosition = textBox.SelectionStart;
