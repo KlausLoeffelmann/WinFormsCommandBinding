@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace WinFormsCommandBinding.Models
@@ -16,6 +17,7 @@ namespace WinFormsCommandBinding.Models
         private int _charCountWrapThreshold = 60;
 
         private (int StartLine, int EndLine) _selectionLines;
+        private ReadOnlyMemory<char>[] _lines = Array.Empty<ReadOnlyMemory<char>>();
 
         public MainFormController(IServiceProvider serviceProvider)
             : base(serviceProvider)
@@ -25,65 +27,99 @@ namespace WinFormsCommandBinding.Models
             _toUpperAsyncCommand = new AsyncRelayCommand(ExecuteToUpperAsync, CanExecuteContentDependingCommands);
             _insertDemoTextAsyncCommand = new AsyncRelayCommand(ExecuteInsertDemoTextAsync);
             _rewrapAsyncCommand = new AsyncRelayCommand(ExecuteRewrapAsync);
+
+            TextDocument = @"This is a test document.
+It doesn't contain a lot of information.
+But it contains enough, to test this app out.
+Just a few lines of text are sufficient for that.
+
+0123456789
+123456789012345
+more text for testing purposes
+
+The end.
+
+";
         }
 
         public string? TextDocument
         {
             get => _textDocument;
+
             set
             {
                 var wasEmpty = String.IsNullOrEmpty(_textDocument);
-                SetProperty(ref _textDocument, value);
 
-                if (wasEmpty ^ string.IsNullOrEmpty(_textDocument))
+                if (SetProperty(ref _textDocument, value))
                 {
-                    NewAsyncCommand.RaiseCanExecuteChanged();
-                    ToUpperAsyncCommand.RaiseCanExecuteChanged();
+                    _lines = GetLinesFromDocument();
+
+                    if (wasEmpty ^ string.IsNullOrEmpty(_textDocument))
+                    {
+                        NewAsyncCommand.RaiseCanExecuteChanged();
+                        ToUpperAsyncCommand.RaiseCanExecuteChanged();
+                    }
                 }
             }
         }
 
+        /// <summary>
+        /// Character count threshold until we wrap to the next line.
+        /// </summary>
         public int CharCountWrapThreshold
         {
             get => _charCountWrapThreshold;
             set => SetProperty(ref _charCountWrapThreshold, value);
         }
 
+        /// <summary>
+        /// Row where the Cursor is located.
+        /// </summary>
         public int SelectionRow
         {
             get => _selectionRow;
             set => SetProperty(ref _selectionRow, value);
         }
 
+        /// <summary>
+        /// Column where the Cursor is located.
+        /// </summary>
         public int SelectionColumn
         {
             get => _selectionColumn;
             set => SetProperty(ref _selectionColumn, value);
         }
 
+        /// <summary>
+        /// The index of the first selected character 
+        /// (or the current cursor position index in to the doc).
+        /// </summary>
         public int SelectionIndex
         {
             get => _selectionIndex;
             set
             {
                 SetProperty(ref _selectionIndex, value);
-                (SelectionRow, SelectionColumn) = GetRowAndColumnFromPosition(_selectionIndex);
+                UpdateSelectionInfo();
             }
         }
 
+        /// <summary>
+        /// Current length of the selection.
+        /// </summary>
         public int SelectionLength
         {
             get => _selectionLength;
             set
             {
                 SetProperty(ref _selectionLength, value);
-
-                SelectionLines = (
-                    SelectionRow,
-                    GetRowAndColumnFromPosition(_selectionIndex + _selectionLength).Row);
+                UpdateSelectionInfo();
             }
         }
 
+        /// <summary>
+        /// Gets the selection start- and endline based on SelectionIndex and SelectionLength
+        /// </summary>
         public (int StartLine, int EndLine) SelectionLines
         {
             get => _selectionLines;
@@ -94,6 +130,112 @@ namespace WinFormsCommandBinding.Models
             }
         }
 
+        // The CarriageReturn string we detect.
+        private string CarriageReturn
+            => GetCarriageReturnStringBasedOnDocument() ?? "\r\n";
+
+        /// <summary>
+        /// Returns a list of lines of the document.
+        /// </summary>
+        public ReadOnlyMemory<char>[] Lines
+            => _lines;
+
+        /// <summary>
+        /// Triggers calculation of SelectionRow, SelectionColumn and SelectionLines.
+        /// </summary>
+        private void UpdateSelectionInfo()
+        {
+            (SelectionRow, SelectionColumn) = GetRowAndColumnFromPosition(_selectionIndex);
+            SelectionLines = (
+                SelectionRow,
+                GetRowAndColumnFromPosition(_selectionIndex + _selectionLength).Row);
+        }
+
+        // Finds out, how the line breaks are coded, which unfortuantely
+        // is different for the respected textbox controls on differnt platforms.
+        //
+        // This could be done more reliably, by having a dedicated
+        // Property, which determines the Platform's behaviour directly
+        // through a platform-depending binding. This works too, though,
+        // without having that.
+        private string? GetCarriageReturnStringBasedOnDocument()
+        {
+            if (TextDocument is null)
+            {
+                return null;
+            }
+
+            if (TextDocument?.IndexOf("\r\n") > -1)
+            {
+                // Android & WinForms TextBox.
+                return "\r\n";
+            }
+            else if (TextDocument?.IndexOf("\n\r") > -1)
+            {
+                // We shouldn't have this.
+                return "\n\r";
+            }
+            else if (TextDocument?.IndexOf("\r") > -1)
+            {
+                // WinUI TextBox.
+                return "\r";
+            }
+
+            // We don't have CrLf yet.
+            else
+            {
+                return null;
+            }
+        }
+
+        // Calculates the line start- and endings.
+        private ReadOnlyMemory<char>[] GetLinesFromDocument()
+        {
+            if (string.IsNullOrEmpty(TextDocument))
+            {
+                return Array.Empty<ReadOnlyMemory<char>>();
+            }
+
+            List<ReadOnlyMemory<char>> lines = new();
+
+            int pos = 0;
+            int previousPos = 0;
+
+            for (; ; )
+            {
+                pos = TextDocument.IndexOf(CarriageReturn, pos);
+
+                if (pos == -1 || previousPos > pos)
+                    break;
+
+                lines.Add(TextDocument.AsMemory()[previousPos..pos]);
+                pos += CarriageReturn.Length;
+                previousPos = pos;
+            }
+
+            lines.Add(TextDocument.AsMemory()[previousPos..]);
+            return lines.ToArray();
+        }
+
+        // Calculates the character index in to the document from a linenumber.
+        private int CharPosFromLineNumber(int lineNumber)
+        {
+            if (lineNumber>Lines.Length)
+            {
+                lineNumber = Lines.Length;
+            }
+
+            int charPos = 0;
+
+            for (int i = 0; i < lineNumber; i++)
+            {
+                charPos += Lines[i].Length + CarriageReturn.Length;
+            }
+
+            return charPos;
+        }
+
+        // Calculates the Line and the Column based on the character index into the doc.
         private (int Row, int Column) GetRowAndColumnFromPosition(int position)
         {
             if (string.IsNullOrEmpty(TextDocument))
@@ -101,34 +243,16 @@ namespace WinFormsCommandBinding.Models
                 return (1, 1);
             }
 
-            var crlf = "\r\n";
+            int charCount = 0;
+            int lineCount = 0;
 
-            int count, lineOffset;
-            int previousPos = 0, pos = -crlf.Length;
-
-            // Count the lines:
-            for (count = 0; ; count++)
+            while (lineCount < Lines.Length && charCount + Lines[lineCount].Length < position)
             {
-                // When we completely at the right of the line, the previous pos is still it.
-                if (pos == position)
-                {
-                    lineOffset = 0;
-                }
-                else
-                {
-                    lineOffset = 1;
-                    previousPos = pos;
-                }
-
-                pos = TextDocument.IndexOf(crlf, pos + crlf.Length);
-                if (pos > position || pos == -1)
-                    break;
+                charCount += Lines[lineCount].Length + CarriageReturn.Length;
+                lineCount++;
             }
 
-            var row = count + lineOffset;
-            var column = (position - 1) - previousPos;
-
-            return (row, column);
+            return (lineCount + 1, (position - charCount) + 1);
         }
     }
 }
