@@ -10,7 +10,6 @@ Public Class CommandTrackBar
 
     Public Event CommandChanged As EventHandler Implements ICommandProvider.CommandChanged
     Public Event CommandCanExecuteChanged As EventHandler Implements ICommandProvider.CommandCanExecuteChanged
-    Public Event CommandExecute As CancelEventHandler Implements ICommandProvider.CommandExecute
     Public Event CommandParameterChanged As EventHandler
 
     Public Property Command As ICommand _
@@ -64,11 +63,6 @@ Public Class CommandTrackBar
             MyBase.Enabled = value
         End Set
     End Property
-
-    Private Sub HandleCommandChanged(e As EventArgs) _
-            Implements ICommandProvider.HandleCommandChanged
-        OnCommandChanged(e)
-    End Sub
 
     Private Sub HandleCommandCanExecuteChanged(sender As Object, e As EventArgs) _
         Implements ICommandProvider.HandleCommandCanExecuteChanged

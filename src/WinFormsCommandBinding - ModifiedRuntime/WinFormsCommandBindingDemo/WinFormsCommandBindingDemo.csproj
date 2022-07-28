@@ -6,10 +6,10 @@
     <UseWindowsForms>true</UseWindowsForms>
     <LangVersion>9.0</LangVersion>
 	<Nullable>enable</Nullable>
+	<EnablePreviewFeatures>true</EnablePreviewFeatures>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CommandTrackBar\CommandTrackBar.vbproj" />
     <ProjectReference Include="..\WinFormsCommandBinding.Standard\WinFormsCommandBinding.Standard.csproj" />
   </ItemGroup>
 

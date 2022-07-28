@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using static WinFormsCommandBindingDemo.Program;
 using WinFormsCommandBinding.Models;
+using static WinFormsCommandBindingDemo.Program;
 
 namespace WinFormsCommandBindingDemo
 {
@@ -48,37 +48,7 @@ namespace WinFormsCommandBindingDemo
         private void MainForm_DataContextChanged(object sender, EventArgs e)
             => _mainFormControllerBindingSource.DataSource = DataContext;
 
-        private void _rewrapButton_CommandExecute(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
-
-        private void _rewrapButton_CommandChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void _rewrapButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Test");
-        }
-
-        private void testButton1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void _rewrapButton_MouseEnter(object sender, EventArgs e)
+        private void RewrapButton_MouseEnter(object sender, EventArgs e)
         {
             Debug.Print(_rewrapButton.CanSelect.ToString());
         }
