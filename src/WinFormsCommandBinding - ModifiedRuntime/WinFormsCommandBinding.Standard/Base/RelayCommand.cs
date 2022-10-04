@@ -4,9 +4,9 @@ using System.Windows.Input;
 namespace WinFormsCommandBinding.Models
 {
     /// <summary>
-    ///  Defines a command in a ViewModel/ViewController which can be bound to a property of type ICommand.
+    ///  Defines a command in a ViewModel/UI-Controller which can be bound to a property of type 
+    ///  <see cref="ICommand"/>.
     /// </summary>
-    /// <remarks></remarks>
     public class RelayCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;

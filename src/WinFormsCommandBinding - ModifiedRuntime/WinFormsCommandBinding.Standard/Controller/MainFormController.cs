@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.Versioning;
 
 namespace WinFormsCommandBinding.Models
 {
     // Class implements INotifyPropertyChanged and simplifies it correct
     // handling over BindableBase by using [CallingMemberName]
+    [RequiresPreviewFeatures()]
     public partial class MainFormController : BindableBase
     {
         private string? _textDocument;
