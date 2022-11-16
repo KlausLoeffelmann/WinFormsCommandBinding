@@ -4,23 +4,17 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MauiEdit"
+
+    Shell.FlyoutBehavior="Flyout">
     
-    Shell.FlyoutBehavior="Flyout" >
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
 
-    <!--<Shell.BindingContext>
-        <local:WinForms MainFormController/>
-    </Shell.BindingContext>-->
+    <MenuItem Text="New..." Command="{Binding TestAsyncCommand}" />
 
-    <FlyoutItem Title="Editor">
-        <Tab >
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-        </Tab>
-    </FlyoutItem>
-
-    <!-- BindingContext doesn't behave ambient currently (bug?). So, we workaround... -->
-    <MenuItem Text="New..." 
-              Command="{Binding NewAsyncCommand}" />
-    
     <MenuItem Text="Options"/>
     <MenuItem Text="About"/>
+
 </Shell>

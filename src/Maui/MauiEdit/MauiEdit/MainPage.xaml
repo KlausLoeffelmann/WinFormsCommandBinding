@@ -9,16 +9,16 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            
+
             <Label 
                 Margin="20,0,0,0"
                 Text="WinForms/Maui Edit"
                 FontAttributes="Bold"
                 FontSize="32"/>
-            
+
             <HorizontalStackLayout 
                 Grid.Column="1">
-                
+
                 <Button 
                     Margin="0,0,10,0"
                     Text="New..." 
@@ -51,7 +51,7 @@
         Margin="0,20,0,10"
         VerticalOptions="Fill"
         HorizontalOptions="Fill">
-            
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
@@ -72,8 +72,8 @@
             HorizontalOptions="Fill"
             VerticalOptions="Fill"
             Text="{Binding TextDocument, Mode=TwoWay}"
-            CursorPosition="{Binding SelectionIndex, Mode=OneWayToSource}"
-            SelectionLength="{Binding SelectionLength, Mode=OneWayToSource}">
+            CursorPosition="{Binding SelectionIndex, Mode=TwoWay}"
+            SelectionLength="{Binding SelectionLength, Mode=TwoWay}">
 
             <Editor.FontFamily>
                 <OnPlatform x:TypeArguments="x:String">
