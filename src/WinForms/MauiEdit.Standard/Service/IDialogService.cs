@@ -7,7 +7,7 @@ namespace WinFormsCommandBinding.Models.Service
     public interface IDialogService
     {
         void SetMarshallingContext(object syncContext);
-        Task NavigateToAsync(BindableBase RegisteredController, bool modalIfPossible = false);
+        Task NavigateToAsync(WinFormsViewController RegisteredController, bool modalIfPossible = false);
         Task<string> ShowMessageBoxAsync(string title, string heading, string message, params string[] buttons);
     }
 }

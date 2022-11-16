@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Versioning;
@@ -7,7 +8,7 @@ namespace WinFormsCommandBinding.Models
 {
     // Class implements INotifyPropertyChanged and simplifies it correct
     // handling over BindableBase by using [CallingMemberName]
-    public partial class MainFormController : BindableBase
+    public partial class MainFormController : WinFormsViewController
     {
         private string? _textDocument;
         private int _selectionRow;
@@ -58,8 +59,8 @@ The end.
 
                     if (wasEmpty ^ string.IsNullOrEmpty(_textDocument))
                     {
-                        NewAsyncCommand.RaiseCanExecuteChanged();
-                        ToUpperAsyncCommand.RaiseCanExecuteChanged();
+                        NewAsyncCommand.NotifyCanExecuteChanged();
+                        ToUpperAsyncCommand.NotifyCanExecuteChanged();
                     }
                 }
             }

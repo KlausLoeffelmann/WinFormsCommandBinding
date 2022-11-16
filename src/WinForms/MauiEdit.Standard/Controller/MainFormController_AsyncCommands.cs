@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Text;
 using System.Threading.Tasks;
 using WinFormsCommandBinding.Models.Service;
@@ -7,7 +8,7 @@ namespace WinFormsCommandBinding.Models
 {
     // Class implements INotifyPropertyChanged and simplifies it correct
     // handling over BindableBase by using [CallingMemberName]
-    public partial class MainFormController : BindableBase
+    public partial class MainFormController : WinFormsViewController
     {
         private AsyncRelayCommand _toolsOptionsAsyncCommand;
         private AsyncRelayCommand _newAsyncCommand;
@@ -55,19 +56,19 @@ namespace WinFormsCommandBinding.Models
             set => SetProperty(ref _rewrapAsyncCommand, value);
         }
 
-        private async Task ExecuteTestAsync(object? _)
+        private async Task ExecuteTestAsync()
         {
             await Task.Delay(0);
         }
 
-        private async Task ExecuteToolsOptionAsync(object? _)
+        private async Task ExecuteToolsOptionAsync()
         {
             var dialogService = ServiceProvider.GetRequiredService<IDialogService>();
             var optionsFormController = new OptionsFormController(ServiceProvider);
             await dialogService.NavigateToAsync(optionsFormController, true);
         }
 
-        private async Task ExecuteToUpperAsync(object? _)
+        private async Task ExecuteToUpperAsync()
         {
             if (string.IsNullOrEmpty(TextDocument))
             {
@@ -91,13 +92,13 @@ namespace WinFormsCommandBinding.Models
             SelectionIndex = savedSelectionIndex;
         }
 
-        private async Task ExecuteInsertDemoTextAsync(object? _)
+        private async Task ExecuteInsertDemoTextAsync()
         {
             TextDocument = GetTestText();
             await Task.CompletedTask;
         }
 
-        private async Task ExecuteNewAsync(object? _)
+        private async Task ExecuteNewAsync()
         {
             // So, this is how we control the UI via a Controller or ViewModel.
             // We get the required Service over the ServiceProvider, 
@@ -118,7 +119,7 @@ namespace WinFormsCommandBinding.Models
             }
         }
 
-        private async Task ExecuteRewrapAsync(object? _)
+        private async Task ExecuteRewrapAsync()
         {
             if (String.IsNullOrEmpty(TextDocument))
                 return;
@@ -172,7 +173,7 @@ namespace WinFormsCommandBinding.Models
             SelectionIndex = cursorPos;
         }
 
-        private bool CanExecuteContentDependingCommands(object? parameter)
+        private bool CanExecuteContentDependingCommands()
             => TextDocument?.Length > 0;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using System;
 using System.ComponentModel;
 
 namespace WinFormsCommandBinding.Models.Controller
@@ -17,10 +18,10 @@ namespace WinFormsCommandBinding.Models.Controller
             _newCommand = new(ExecuteRelayCommand, CanExecuteRelayCommand);
         }
 
-        private void ExecuteRelayCommand(object? commandParameter)
+        private void ExecuteRelayCommand()
             => TextDocument = String.Empty;
 
-        private bool CanExecuteRelayCommand(object? commandParameter)
+        private bool CanExecuteRelayCommand()
             => TextDocument != String.Empty;
 
         public RelayCommand? NewCommand
@@ -54,7 +55,7 @@ namespace WinFormsCommandBinding.Models.Controller
                     {
                         // Execution-Context changed because the TextDocument was empty
                         // and now it's not anymore or viceversa.
-                        NewCommand?.RaiseCanExecuteChanged();
+                        NewCommand?.NotifyCanExecuteChanged();
                     }
                 }
             }

@@ -5,14 +5,14 @@ namespace CommandBindingDemo.UnitTest.Services
     public class NavigationEventArgs : EventArgs
     {
         public NavigationEventArgs(
-            BindableBase? registeredController=null, 
+            WinFormsViewController? registeredController=null, 
             bool modalIfPossible=false)
         {
             RegisteredControler = registeredController;
             ModalIfPossible = modalIfPossible;
         }
 
-        public BindableBase? RegisteredControler { get; }
+        public WinFormsViewController? RegisteredControler { get; }
         public bool ModalIfPossible { get; }
     }
 }

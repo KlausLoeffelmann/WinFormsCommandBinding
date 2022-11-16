@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace WinFormsCommandBinding.Models
@@ -8,7 +10,7 @@ namespace WinFormsCommandBinding.Models
 
     // Note: This class does not get serialized in this demo, but the
     // binding is working.
-    public class OptionsFormController : BindableBase
+    public class OptionsFormController : WinFormsViewController
     {
         private RelayCommand _okCommand;
 
@@ -31,12 +33,12 @@ namespace WinFormsCommandBinding.Models
             set => base.SetProperty(ref _okCommand, value);
         }
 
-        private void ExecuteOK(object? param)
+        private void ExecuteOK()
         {
-            Console.WriteLine($"Called ExecuteCommand, parameter: {param}");
+            Console.WriteLine($"Called ExecuteCommand.");
         }
 
-        private bool CanExecuteOK(object? _) => _isDirty;
+        private bool CanExecuteOK() => _isDirty;
 
         public bool BoolOption
         {
@@ -62,13 +64,13 @@ namespace WinFormsCommandBinding.Models
             set => base.SetProperty(ref _dateOption, value);
         }
 
-        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            base.OnPropertyChanged(propertyName);
+            base.OnPropertyChanged(e);
             if (!_isDirty)
             {
                 _isDirty = true;
-                OKCommand.RaiseCanExecuteChanged();
+                OKCommand.NotifyCanExecuteChanged();
             }
         }
     }

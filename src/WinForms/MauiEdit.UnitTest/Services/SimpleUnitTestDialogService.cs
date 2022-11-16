@@ -8,7 +8,7 @@ namespace CommandBindingDemo.UnitTest.Services
         public event EventHandler<NavigationEventArgs>? NavigatedToRequested;
         public event EventHandler<ShowMessageBoxResultEventArgs>? ShowMessageBoxRequested;
 
-        public async Task NavigateToAsync(BindableBase registeredController, bool modalIfPossible = false)
+        public async Task NavigateToAsync(WinFormsViewController registeredController, bool modalIfPossible = false)
         {
             NavigatedToRequested?.Invoke(
                 this,

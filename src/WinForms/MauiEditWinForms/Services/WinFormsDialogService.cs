@@ -39,7 +39,7 @@ namespace WinFormsCommandBindingDemo.Services
             _controllerFormTypeLookup.Add(uiController, viewAsForm);
         }
 
-        public async Task NavigateToAsync(BindableBase registeredController, bool modalIfPossible = false)
+        public async Task NavigateToAsync(WinFormsViewController registeredController, bool modalIfPossible = false)
         {
             if (_controllerFormTypeLookup.TryGetValue(registeredController.GetType(), out var viewType))
             {
