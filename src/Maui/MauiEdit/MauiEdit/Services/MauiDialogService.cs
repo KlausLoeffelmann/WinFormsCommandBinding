@@ -7,7 +7,7 @@ namespace MauiEdit.Services
     {
         private Page? _marshallingContextAsPage;
 
-        public async Task NavigateToAsync(BindableBase RegisteredController, bool modalIfPossible = false)
+        public async Task NavigateToAsync(WinFormsViewController RegisteredController, bool modalIfPossible = false)
         {
             if (_marshallingContextAsPage is not null)
             {

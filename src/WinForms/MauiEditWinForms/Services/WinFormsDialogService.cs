@@ -35,7 +35,6 @@ namespace WinFormsCommandBindingDemo.Services
                     "which is needed to run asynchronous Dialog Service calls.");
             }
 
-            // TODO: Type Check as runtime.
             _controllerFormTypeLookup.Add(uiController, viewAsForm);
         }
 

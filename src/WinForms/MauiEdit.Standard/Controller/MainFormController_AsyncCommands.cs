@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,6 @@ namespace WinFormsCommandBinding.Models
     public partial class MainFormController : WinFormsViewController
     {
         private AsyncRelayCommand _toolsOptionsAsyncCommand;
-        private AsyncRelayCommand _newAsyncCommand;
         private AsyncRelayCommand _testAsyncCommand;
         private AsyncRelayCommand _toUpperAsyncCommand;
         private AsyncRelayCommand _insertDemoTextAsyncCommand;
@@ -19,12 +19,6 @@ namespace WinFormsCommandBinding.Models
 
         public const string YesButtonText = "Yes";
         public const string NoButtonText = "No";
-
-        public AsyncRelayCommand NewAsyncCommand
-        {
-            get => _newAsyncCommand;
-            set => SetProperty(ref _newAsyncCommand, value);
-        }
 
         public AsyncRelayCommand TestAsyncCommand
         {
@@ -56,6 +50,7 @@ namespace WinFormsCommandBinding.Models
             set => SetProperty(ref _rewrapAsyncCommand, value);
         }
 
+        [RelayCommand]
         private async Task ExecuteTestAsync()
         {
             await Task.Delay(0);
@@ -98,7 +93,8 @@ namespace WinFormsCommandBinding.Models
             await Task.CompletedTask;
         }
 
-        private async Task ExecuteNewAsync()
+        [RelayCommand(CanExecute = nameof(CanExecuteContentDependingCommands))]
+        private async Task NewAsync()
         {
             // So, this is how we control the UI via a Controller or ViewModel.
             // We get the required Service over the ServiceProvider, 

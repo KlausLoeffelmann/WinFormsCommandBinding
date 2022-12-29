@@ -1,8 +1,10 @@
 ﻿
+using System.Runtime.Versioning;
 using WinFormsCommandBinding.Models;
 
 namespace WinFormsCommandBindingDemo
 {
+    [RequiresPreviewFeatures]
     partial class MainForm
     {
         /// <summary>

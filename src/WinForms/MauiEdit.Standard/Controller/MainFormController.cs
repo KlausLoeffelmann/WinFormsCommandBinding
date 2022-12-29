@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.Versioning;
 
 namespace WinFormsCommandBinding.Models
 {
@@ -11,21 +11,50 @@ namespace WinFormsCommandBinding.Models
     public partial class MainFormController : WinFormsViewController
     {
         private string? _textDocument;
-        private int _selectionRow;
-        private int _selectionColumn;
-        private int _selectionIndex;
+
+        private ReadOnlyMemory<char>[] _lines = Array.Empty<ReadOnlyMemory<char>>();
+
+        /// <summary>
+        /// Gets the selection start- and endline based on SelectionIndex and SelectionLength
+        /// </summary>
+        [ObservableProperty]
+        private (int StartLine, int EndLine) _selectionLines;
+
+        /// <summary>
+        /// Current length of the selection.
+        /// </summary>
+        [ObservableProperty]
         private int _selectionLength;
 
-        private int _charCountWrapThreshold = 60;
+        /// <summary>
+        ///  Row where the Cursor is located.
+        /// </summary>
+        [ObservableProperty]
+        private int _selectionRow;
 
-        private (int StartLine, int EndLine) _selectionLines;
-        private ReadOnlyMemory<char>[] _lines = Array.Empty<ReadOnlyMemory<char>>();
+        /// <summary>
+        ///  The index of the first selected character 
+        ///  (or the current cursor position index in to the doc).
+        /// </summary>
+        [ObservableProperty]
+        private int _selectionIndex;
+
+        /// <summary>
+        /// Column where the Cursor is located.
+        /// </summary>
+        [ObservableProperty]
+        private int _selectionColumn;
+
+        /// <summary>
+        ///  Character count threshold until we wrap to the next line.
+        /// </summary>
+        [ObservableProperty]
+        private int _charCountWrapThreshold = 60;
 
         public MainFormController(IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
             _toolsOptionsAsyncCommand = new AsyncRelayCommand(ExecuteToolsOptionAsync);
-            _newAsyncCommand = new AsyncRelayCommand(ExecuteNewAsync, CanExecuteContentDependingCommands);
             _toUpperAsyncCommand = new AsyncRelayCommand(ExecuteToUpperAsync, CanExecuteContentDependingCommands);
             _insertDemoTextAsyncCommand = new AsyncRelayCommand(ExecuteInsertDemoTextAsync);
             _rewrapAsyncCommand = new AsyncRelayCommand(ExecuteRewrapAsync);
@@ -59,77 +88,11 @@ The end.
 
                     if (wasEmpty ^ string.IsNullOrEmpty(_textDocument))
                     {
-                        NewAsyncCommand.NotifyCanExecuteChanged();
+                        
+                        //NewAsyncCommand.NotifyCanExecuteChanged();
                         ToUpperAsyncCommand.NotifyCanExecuteChanged();
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Character count threshold until we wrap to the next line.
-        /// </summary>
-        public int CharCountWrapThreshold
-        {
-            get => _charCountWrapThreshold;
-            set => SetProperty(ref _charCountWrapThreshold, value);
-        }
-
-        /// <summary>
-        /// Row where the Cursor is located.
-        /// </summary>
-        public int SelectionRow
-        {
-            get => _selectionRow;
-            set => SetProperty(ref _selectionRow, value);
-        }
-
-        /// <summary>
-        /// Column where the Cursor is located.
-        /// </summary>
-        public int SelectionColumn
-        {
-            get => _selectionColumn;
-            set => SetProperty(ref _selectionColumn, value);
-        }
-
-        /// <summary>
-        /// The index of the first selected character 
-        /// (or the current cursor position index in to the doc).
-        /// </summary>
-        public int SelectionIndex
-        {
-            get => _selectionIndex;
-            set
-            {
-                SetProperty(ref _selectionIndex, value);
-                UpdateSelectionInfo();
-            }
-        }
-
-        /// <summary>
-        /// Current length of the selection.
-        /// </summary>
-        public int SelectionLength
-        {
-            get => _selectionLength;
-            set
-            {
-                SetProperty(ref _selectionLength, value);
-                UpdateSelectionInfo();
-            }
-        }
-
-        /// <summary>
-        /// Gets the selection start- and endline based on SelectionIndex and SelectionLength
-        /// </summary>
-        public (int StartLine, int EndLine) SelectionLines
-        {
-            get => _selectionLines;
-            set
-            {
-                SetProperty(ref _selectionLines, value);
-                Debug.Print($"SelectionLine: {_selectionLines}");
             }
         }
 
@@ -142,6 +105,16 @@ The end.
         /// </summary>
         public ReadOnlyMemory<char>[] Lines
             => _lines;
+
+        partial void OnSelectionLinesChanged((int StartLine, int EndLine) value)
+            => Debug.Print($"SelectionLine: {_selectionLines}");
+
+        partial void OnSelectionLengthChanged(int value)
+            => UpdateSelectionInfo();
+
+
+        partial void OnSelectionIndexChanged(int value)
+            => UpdateSelectionInfo();
 
         /// <summary>
         /// Triggers calculation of SelectionRow, SelectionColumn and SelectionLines.
