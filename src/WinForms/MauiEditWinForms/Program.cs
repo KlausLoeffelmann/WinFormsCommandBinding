@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Versioning;
 using System.Windows.Forms;
 using WinFormsCommandBinding.Models;
 using WinFormsCommandBinding.Models.Service;
@@ -7,7 +6,6 @@ using WinFormsCommandBindingDemo.Services;
 
 namespace WinFormsCommandBindingDemo
 {
-    [RequiresPreviewFeatures]
     static partial class Program
     {
         /// <summary>

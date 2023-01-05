@@ -19,7 +19,7 @@ namespace WinFormsCommandBindingDemo
             DataContext = new MainFormController(SimpleServiceProvider.GetInstance());
         }
 
-        private void MainForm_DataContextChanged(object sender, EventArgs e) 
+        private void MainForm_DataContextChanged(object sender, EventArgs e)
             => _mainFormControllerBindingSource.DataSource = DataContext;
     }
 }

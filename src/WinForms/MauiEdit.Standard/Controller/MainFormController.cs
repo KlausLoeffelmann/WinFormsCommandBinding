@@ -55,10 +55,7 @@ namespace WinFormsCommandBinding.Models
             : base(serviceProvider)
         {
             _toolsOptionsAsyncCommand = new AsyncRelayCommand(ExecuteToolsOptionAsync);
-            _toUpperAsyncCommand = new AsyncRelayCommand(ExecuteToUpperAsync, CanExecuteContentDependingCommands);
             _insertDemoTextAsyncCommand = new AsyncRelayCommand(ExecuteInsertDemoTextAsync);
-            _rewrapAsyncCommand = new AsyncRelayCommand(ExecuteRewrapAsync);
-            _testAsyncCommand = new AsyncRelayCommand(ExecuteTestAsync);
 
             TextDocument = @"This is a test document.
 It doesn't contain a lot of information.
@@ -88,9 +85,8 @@ The end.
 
                     if (wasEmpty ^ string.IsNullOrEmpty(_textDocument))
                     {
-                        
-                        //NewAsyncCommand.NotifyCanExecuteChanged();
-                        ToUpperAsyncCommand.NotifyCanExecuteChanged();
+                        NewDocumentCommand.NotifyCanExecuteChanged();
+                        ToUpperCommand.NotifyCanExecuteChanged();
                     }
                 }
             }

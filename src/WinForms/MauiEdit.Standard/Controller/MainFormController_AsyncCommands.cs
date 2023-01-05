@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,30 +11,15 @@ namespace WinFormsCommandBinding.Models
     public partial class MainFormController : WinFormsViewController
     {
         private AsyncRelayCommand _toolsOptionsAsyncCommand;
-        private AsyncRelayCommand _testAsyncCommand;
-        private AsyncRelayCommand _toUpperAsyncCommand;
         private AsyncRelayCommand _insertDemoTextAsyncCommand;
-        private AsyncRelayCommand _rewrapAsyncCommand;
 
         public const string YesButtonText = "Yes";
         public const string NoButtonText = "No";
-
-        public AsyncRelayCommand TestAsyncCommand
-        {
-            get => _testAsyncCommand;
-            set => SetProperty(ref _testAsyncCommand, value);
-        }
 
         public AsyncRelayCommand ToolsOptionsAsyncCommand
         {
             get => _toolsOptionsAsyncCommand;
             set => SetProperty(ref _toolsOptionsAsyncCommand, value);
-        }
-
-        public AsyncRelayCommand ToUpperAsyncCommand
-        {
-            get => _toUpperAsyncCommand;
-            set => SetProperty(ref _toUpperAsyncCommand, value);
         }
 
         public AsyncRelayCommand InsertDemoTextAsyncCommand
@@ -44,16 +28,10 @@ namespace WinFormsCommandBinding.Models
             set => SetProperty(ref _insertDemoTextAsyncCommand, value);
         }
 
-        public AsyncRelayCommand RewrapAsyncCommand
+        private async Task ExecuteInsertDemoTextAsync()
         {
-            get => _rewrapAsyncCommand;
-            set => SetProperty(ref _rewrapAsyncCommand, value);
-        }
-
-        [RelayCommand]
-        private async Task ExecuteTestAsync()
-        {
-            await Task.Delay(0);
+            TextDocument = GetTestText();
+            await Task.CompletedTask;
         }
 
         private async Task ExecuteToolsOptionAsync()
@@ -63,7 +41,8 @@ namespace WinFormsCommandBinding.Models
             await dialogService.NavigateToAsync(optionsFormController, true);
         }
 
-        private async Task ExecuteToUpperAsync()
+        [RelayCommand(CanExecute = nameof(CanExecuteContentDependingCommands))]
+        private async Task ToUpperAsync()
         {
             if (string.IsNullOrEmpty(TextDocument))
             {
@@ -87,14 +66,8 @@ namespace WinFormsCommandBinding.Models
             SelectionIndex = savedSelectionIndex;
         }
 
-        private async Task ExecuteInsertDemoTextAsync()
-        {
-            TextDocument = GetTestText();
-            await Task.CompletedTask;
-        }
-
         [RelayCommand(CanExecute = nameof(CanExecuteContentDependingCommands))]
-        private async Task NewAsync()
+        private async Task NewDocumentAsync()
         {
             // So, this is how we control the UI via a Controller or ViewModel.
             // We get the required Service over the ServiceProvider, 
@@ -115,7 +88,8 @@ namespace WinFormsCommandBinding.Models
             }
         }
 
-        private async Task ExecuteRewrapAsync()
+        [RelayCommand(CanExecute = nameof(CanExecuteContentDependingCommands))]
+        private async Task RewrapAsync()
         {
             if (String.IsNullOrEmpty(TextDocument))
                 return;

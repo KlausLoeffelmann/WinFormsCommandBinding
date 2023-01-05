@@ -18,7 +18,7 @@ namespace WinFormsCommandBindingDemo
         public static WinFormsAsyncHelper GetInstance(Control marshallingControl)
             => s_instance ??= new WinFormsAsyncHelper(marshallingControl);
 
-        public async Task<T> InvokeAsync<T>(Func<T> function)
+        public async Task<T?> InvokeAsync<T>(Func<T> function)
         {
             TaskCompletionSource<bool> taskCompletionSource = new();
             IAsyncResult? asyncResult = _marshallingControl.BeginInvoke(function);
@@ -33,7 +33,7 @@ namespace WinFormsCommandBindingDemo
             await taskCompletionSource.Task;
 
             object? returnObject = _marshallingControl.EndInvoke(asyncResult);
-            return (T)returnObject;
+            return (T?)returnObject;
         }
 
         private static void InvokeAsyncCallBack(object? state, bool timeOut)
