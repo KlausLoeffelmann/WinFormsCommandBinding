@@ -14,7 +14,7 @@ namespace WinFormsCommandBindingDemo
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            //simpleCommandViewModelBindingSource.DataSource = new SimpleCommandViewModel();
+            simpleCommandViewModelBindingSource.DataSource = new SimpleCommandViewModel();
         }
     }
 }
