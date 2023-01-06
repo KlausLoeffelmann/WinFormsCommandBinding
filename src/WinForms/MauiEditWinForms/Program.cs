@@ -17,6 +17,9 @@ namespace WinFormsCommandBindingDemo
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            Application.Run(new SimpleTestForm());
+            goto End;
             
             var mainForm = new MainForm();
 
@@ -31,6 +34,9 @@ namespace WinFormsCommandBindingDemo
                     viewAsForm: typeof(OptionsForm));
 
             Application.Run(mainForm);
+
+
+        End:;
         }
     }
 }
