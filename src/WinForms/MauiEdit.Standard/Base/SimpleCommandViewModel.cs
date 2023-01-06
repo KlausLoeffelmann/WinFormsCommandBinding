@@ -9,35 +9,35 @@ namespace WinFormsCommandBinding.Models
         public event PropertyChangedEventHandler? PropertyChanged;
 
         // Backing field for the properties.
-        private bool _commandAvailability;
-        private RelayCommand _command;
-        private string _commandResult = "* not invoked yet *";
+        private bool _sampleCommandAvailability;
+        private RelayCommand _sampleCommand;
+        private string _sampleCommandResult = "* not invoked yet *";
         private int _invokeCount;
 
         public SimpleCommandViewModel()
         {
-            _command = new RelayCommand(ExecuteCommand, CanExecuteCommand);
+            _sampleCommand = new RelayCommand(ExecuteSampleCommand, CanExecuteSampleCommand);
         }
 
         /// <summary>
         ///  Controls the command availability and is bound to the CheckBox of the Form.
         /// </summary>
-        public bool CommandAvailability
+        public bool SampleCommandAvailability
         {
-            get => _commandAvailability;
+            get => _sampleCommandAvailability;
             set
             {
-                if (_commandAvailability == value)
+                if (_sampleCommandAvailability == value)
                 {
                     return;
                 }
 
-                _commandAvailability = value;
+                _sampleCommandAvailability = value;
 
                 // When this property changes we need to notify the UI that the command availability has changed.
                 // The command's availability is reflected through the button's enabled state, which is - 
                 // because its command property is bound - automatically updated.
-                _command.NotifyCanExecuteChanged();
+                _sampleCommand.NotifyCanExecuteChanged();
 
                 // Notify the UI that the property has changed.
                 OnPropertyChanged();
@@ -48,17 +48,17 @@ namespace WinFormsCommandBinding.Models
         ///  Command that is bound to the button of the Form.
         ///  When the button is clicked, the command is executed.
         /// </summary>
-        public RelayCommand Command
+        public RelayCommand SampleCommand
         {
-            get => _command;
+            get => _sampleCommand;
             set
             {
-                if (_command == value)
+                if (_sampleCommand == value)
                 {
                     return;
                 }
 
-                _command = value;
+                _sampleCommand = value;
                 OnPropertyChanged();
             }
         }
@@ -66,17 +66,17 @@ namespace WinFormsCommandBinding.Models
         /// <summary>
         ///  The result of the command execution, which is bound to the Form's label.
         /// </summary>
-        public string CommandResult
+        public string SampleCommandResult
         {
-            get => _commandResult;
+            get => _sampleCommandResult;
             set
             {
-                if (_commandResult == value)
+                if (_sampleCommandResult == value)
                 {
                     return;
                 }
 
-                _commandResult = value;
+                _sampleCommandResult = value;
                 OnPropertyChanged();
             }
         }
@@ -84,15 +84,15 @@ namespace WinFormsCommandBinding.Models
         /// <summary>
         ///  Method that is executed when the command is invoked.
         /// </summary>
-        public void ExecuteCommand()
-            => CommandResult = $"Command invoked {_invokeCount++} times.";
+        public void ExecuteSampleCommand()
+            => SampleCommandResult = $"Command invoked {_invokeCount++} times.";
 
         /// <summary>
         ///  Method that determines whether the command can be executed. It reflects the 
         ///  property CommandAvailability, which in turn is bound to the CheckBox of the Form.
         /// </summary>
-        public bool CanExecuteCommand()
-            => CommandAvailability;
+        public bool CanExecuteSampleCommand()
+            => SampleCommandAvailability;
 
         // Notify the UI that one of the properties has changed.
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")

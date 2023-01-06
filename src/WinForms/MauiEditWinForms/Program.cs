@@ -35,8 +35,8 @@ namespace WinFormsCommandBindingDemo
 
             Application.Run(mainForm);
 
-
         End:;
+            
         }
     }
 }

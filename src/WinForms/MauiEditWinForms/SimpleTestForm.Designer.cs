@@ -38,7 +38,7 @@
             // 
             // _testCommandButton
             // 
-            _testCommandButton.DataBindings.Add(new System.Windows.Forms.Binding("Command", simpleCommandViewModelBindingSource, "Command", true));
+            _testCommandButton.DataBindings.Add(new System.Windows.Forms.Binding("Command", simpleCommandViewModelBindingSource, "SampleCommand", true));
             _testCommandButton.Location = new System.Drawing.Point(101, 72);
             _testCommandButton.Name = "_testCommandButton";
             _testCommandButton.Size = new System.Drawing.Size(148, 39);
@@ -49,7 +49,7 @@
             // _commandResultLabel
             // 
             _commandResultLabel.AutoSize = true;
-            _commandResultLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", simpleCommandViewModelBindingSource, "CommandResult", true));
+            _commandResultLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", simpleCommandViewModelBindingSource, "SampleCommandResult", true));
             _commandResultLabel.Location = new System.Drawing.Point(92, 127);
             _commandResultLabel.Name = "_commandResultLabel";
             _commandResultLabel.Size = new System.Drawing.Size(166, 20);
@@ -59,7 +59,7 @@
             // _commandAvailabilityCheckBox
             // 
             _commandAvailabilityCheckBox.AutoSize = true;
-            _commandAvailabilityCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", simpleCommandViewModelBindingSource, "CommandAvailability", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            _commandAvailabilityCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", simpleCommandViewModelBindingSource, "SampleCommandAvailability", true));
             _commandAvailabilityCheckBox.Location = new System.Drawing.Point(86, 32);
             _commandAvailabilityCheckBox.Name = "_commandAvailabilityCheckBox";
             _commandAvailabilityCheckBox.Size = new System.Drawing.Size(178, 24);
