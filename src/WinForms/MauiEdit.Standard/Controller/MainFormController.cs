@@ -54,9 +54,6 @@ namespace WinFormsCommandBinding.Models
         public MainFormController(IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
-            _toolsOptionsAsyncCommand = new AsyncRelayCommand(ExecuteToolsOptionAsync);
-            _insertDemoTextAsyncCommand = new AsyncRelayCommand(ExecuteInsertDemoTextAsync);
-
             TextDocument = @"This is a test document.
 It doesn't contain a lot of information.
 But it contains enough, to test this app out.

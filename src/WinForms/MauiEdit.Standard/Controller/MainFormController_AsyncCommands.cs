@@ -10,37 +10,17 @@ namespace WinFormsCommandBinding.Models
     // handling over BindableBase by using [CallingMemberName]
     public partial class MainFormController : WinFormsViewController
     {
-        private AsyncRelayCommand _toolsOptionsAsyncCommand;
-        private AsyncRelayCommand _insertDemoTextAsyncCommand;
-
         public const string YesButtonText = "Yes";
         public const string NoButtonText = "No";
 
-        public AsyncRelayCommand ToolsOptionsAsyncCommand
-        {
-            get => _toolsOptionsAsyncCommand;
-            set => SetProperty(ref _toolsOptionsAsyncCommand, value);
-        }
+        [RelayCommand(CanExecute = nameof(CanExecuteContentDependingCommands))]
+        private void InsertDemoText()
+            => TextDocument = GetTestText();
 
-        public AsyncRelayCommand InsertDemoTextAsyncCommand
-        {
-            get => _insertDemoTextAsyncCommand;
-            set => SetProperty(ref _insertDemoTextAsyncCommand, value);
-        }
-
-        private async Task ExecuteInsertDemoTextAsync()
-        {
-            TextDocument = GetTestText();
-            await Task.CompletedTask;
-        }
-
-        private async Task ExecuteToolsOptionAsync()
-        {
-            var dialogService = ServiceProvider.GetRequiredService<IDialogService>();
-            var optionsFormController = new OptionsFormController(ServiceProvider);
-            await dialogService.NavigateToAsync(optionsFormController, true);
-        }
-
+        // Note: Relay Commands can be implemented synchronously and asynchronously.
+        // Especially in MAUI apps, a UI dependent method should never block UI.
+        // In WinForms, it's not that big a deal, but running tasks asynchronously
+        // is also making WinForms apps more responsive - which never hurts!
         [RelayCommand(CanExecute = nameof(CanExecuteContentDependingCommands))]
         private async Task ToUpperAsync()
         {
@@ -52,6 +32,12 @@ namespace WinFormsCommandBinding.Models
             string tempText = null!;
             var savedSelectionIndex = SelectionIndex;
 
+            // This has more of a demo character than it is a real necessity in this context:
+            // We're running a CPU-bound task here to guarantee a fluent UI. To that end,
+            // we're awaiting the task which we started here. Be careful, though, for WinForms
+            // if you spin of CPU-bound tasks in TerminalServer or Desktop-virtualization scenarios.
+            // You could quickly exhaust processor resources, and that would be counter intuitive
+            // in terms of performance.
             await Task.Run(() =>
             {
                 var upperText = TextDocument[SelectionIndex..(SelectionIndex + SelectionLength)].ToUpper();
@@ -62,8 +48,13 @@ namespace WinFormsCommandBinding.Models
                     TextDocument[(SelectionIndex + SelectionLength)..].AsSpan());
             });
 
-            TextDocument = tempText;
-            SelectionIndex = savedSelectionIndex;
+            // When you are modifying the UI: Make sure you do it on the UI thread!
+            // While we generated tempText on a worker thread, the actual assignment
+            // (which triggers the updating through data binding) is happening back on
+            // the UI thread. You would get cross-thread-exceptions otherwise. This is
+            // true for all the UI stacks.
+            TextDocument = tempText;                // This is the new "uppered" text.
+            SelectionIndex = savedSelectionIndex;   // We're restoring the cursor position.
         }
 
         [RelayCommand(CanExecute = nameof(CanExecuteContentDependingCommands))]
@@ -71,11 +62,18 @@ namespace WinFormsCommandBinding.Models
         {
             // So, this is how we control the UI via a Controller or ViewModel.
             // We get the required Service over the ServiceProvider, 
-            // which the Controller/ViewModels got via Dependency Injection...
+            // which the Controller/ViewModels got via Dependency Injection.
+            // Dependency Injection means, _depending_ on what UI-Stack (or even inside a Unit Test)
+            // we're actually running, the dialogService will do different things:
+
+            // * On WinForms it shows a WinForms MessageBox.
+            // * On MAUI, it displays an alert.
+            // * In the context of a unit test, it doesn't show anything: the unit test,
+            //   just pretends, the user had clicked the result button.
             var dialogService = ServiceProvider.GetRequiredService<IDialogService>();
 
-            // Now we use this dialogService to remote-control the UI completely
-            // independent of the actual UI technology.
+            // Now we use this DialogService to remote-control the UI completely
+            // _and_ independent of the actual UI technology.
             var buttonString = await dialogService.ShowMessageBoxAsync(
                 title: "New Document",
                 heading: "Do you want to create a new Document?",
@@ -145,5 +143,13 @@ namespace WinFormsCommandBinding.Models
 
         private bool CanExecuteContentDependingCommands()
             => TextDocument?.Length > 0;
+
+        [RelayCommand()]
+        private async Task ShowToolsOptionsAsync()
+        {
+            var dialogService = ServiceProvider.GetRequiredService<IDialogService>();
+            var optionsFormController = new OptionsFormController(ServiceProvider);
+            await dialogService.NavigateToAsync(optionsFormController, true);
+        }
     }
 }

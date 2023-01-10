@@ -18,8 +18,9 @@ namespace WinFormsCommandBindingDemo
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new SimpleTestForm());
-            goto End;
+            // // Comment this out, to enable the simple WinForms binding demo forms.
+            // Application.Run(new SimpleTestForm());
+            // return;
             
             var mainForm = new MainForm();
 
@@ -34,9 +35,6 @@ namespace WinFormsCommandBindingDemo
                     viewAsForm: typeof(OptionsForm));
 
             Application.Run(mainForm);
-
-        End:;
-            
         }
     }
 }

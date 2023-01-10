@@ -78,9 +78,9 @@ namespace WinFormsCommandBindingDemo
             // 
             // _newToolStripMenuItem
             // 
-            _newToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "NewAsyncCommand", true));
+            _newToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "NewDocumentCommand", true));
             _newToolStripMenuItem.Name = "_newToolStripMenuItem";
-            _newToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            _newToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             _newToolStripMenuItem.Text = "New...";
             // 
             // _mainFormControllerBindingSource
@@ -89,20 +89,20 @@ namespace WinFormsCommandBindingDemo
             // 
             // _insertDemoTextToolStripMenuItem
             // 
-            _insertDemoTextToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "InsertDemoTextAsyncCommand", true));
+            _insertDemoTextToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "InsertDemoTextCommandCommand", true));
             _insertDemoTextToolStripMenuItem.Name = "_insertDemoTextToolStripMenuItem";
-            _insertDemoTextToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            _insertDemoTextToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             _insertDemoTextToolStripMenuItem.Text = "&Insert demo text";
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new System.Drawing.Size(221, 6);
+            toolStripMenuItem1.Size = new System.Drawing.Size(197, 6);
             // 
             // _quitToolStripMenuItem
             // 
             _quitToolStripMenuItem.Name = "_quitToolStripMenuItem";
-            _quitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            _quitToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             _quitToolStripMenuItem.Text = "&Quit";
             // 
             // toolStripMenuItem3
@@ -114,7 +114,7 @@ namespace WinFormsCommandBindingDemo
             // 
             // _convertToUpperToolStripMenuItem
             // 
-            _convertToUpperToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "ToUpperAsyncCommand", true));
+            _convertToUpperToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "ToUpperCommand", true));
             _convertToUpperToolStripMenuItem.Name = "_convertToUpperToolStripMenuItem";
             _convertToUpperToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             _convertToUpperToolStripMenuItem.Text = "Convert to upper";
@@ -177,6 +177,7 @@ namespace WinFormsCommandBindingDemo
             _editorSurface.Margin = new System.Windows.Forms.Padding(4);
             _editorSurface.Multiline = true;
             _editorSurface.Name = "_editorSurface";
+            _editorSurface.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             _editorSurface.Size = new System.Drawing.Size(732, 488);
             _editorSurface.TabIndex = 2;
             // 
@@ -184,6 +185,7 @@ namespace WinFormsCommandBindingDemo
             // 
             trackBar1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             trackBar1.AutoSize = false;
+            trackBar1.DataBindings.Add(new System.Windows.Forms.Binding("Value", _mainFormControllerBindingSource, "CharCountWrapThreshold", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             trackBar1.Location = new System.Drawing.Point(12, 29);
             trackBar1.Margin = new System.Windows.Forms.Padding(2);
             trackBar1.Maximum = 80;
@@ -196,7 +198,7 @@ namespace WinFormsCommandBindingDemo
             // _rewrapButton
             // 
             _rewrapButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            _rewrapButton.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "RewrapAsyncCommand", true));
+            _rewrapButton.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "RewrapCommand", true));
             _rewrapButton.Location = new System.Drawing.Point(660, 29);
             _rewrapButton.Margin = new System.Windows.Forms.Padding(2);
             _rewrapButton.Name = "_rewrapButton";
@@ -209,6 +211,7 @@ namespace WinFormsCommandBindingDemo
             // 
             _charWrapThreshold.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             _charWrapThreshold.AutoSize = true;
+            _charWrapThreshold.DataBindings.Add(new System.Windows.Forms.Binding("Text", _mainFormControllerBindingSource, "CharCountWrapThreshold", true));
             _charWrapThreshold.Location = new System.Drawing.Point(612, 34);
             _charWrapThreshold.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             _charWrapThreshold.Name = "_charWrapThreshold";

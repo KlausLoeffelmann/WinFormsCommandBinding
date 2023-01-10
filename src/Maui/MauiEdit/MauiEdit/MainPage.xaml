@@ -23,25 +23,25 @@
                     Margin="0,0,10,0"
                     Text="New..." 
                     HeightRequest="40"
-                    Command="{Binding NewAsyncCommand}"/>
+                    Command="{Binding NewDocumentCommand}"/>
 
                 <Button 
                     Margin="0,0,10,0"
                     Text="Insert Demo Text" 
                     HeightRequest="40"
-                    Command="{Binding InsertDemoTextAsyncCommand}"/>
+                    Command="{Binding InsertDemoTextCommand}"/>
 
                 <Button 
                     Margin="0,0,10,0"
                     Text="To upper" 
                     HeightRequest="40"
-                    Command="{Binding ToUpperAsyncCommand}"/>
+                    Command="{Binding ToUpperCommand}"/>
 
                 <Button 
                     Margin="0,0,10,0"
                     Text="Rewrap" 
                     HeightRequest="40"
-                    Command="{Binding RewrapAsyncCommand}"/>
+                    Command="{Binding RewrapCommand}"/>
 
             </HorizontalStackLayout>
         </Grid>
