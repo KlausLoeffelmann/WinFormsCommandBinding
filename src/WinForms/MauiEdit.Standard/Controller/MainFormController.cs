@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,6 +26,12 @@ namespace WinFormsCommandBinding.Models
         private int _selectionLength;
 
         /// <summary>
+        /// Column where the Cursor is located.
+        /// </summary>
+        [ObservableProperty]
+        private int _selectionColumn;
+
+        /// <summary>
         ///  Row where the Cursor is located.
         /// </summary>
         [ObservableProperty]
@@ -38,12 +43,6 @@ namespace WinFormsCommandBinding.Models
         /// </summary>
         [ObservableProperty]
         private int _selectionIndex;
-
-        /// <summary>
-        /// Column where the Cursor is located.
-        /// </summary>
-        [ObservableProperty]
-        private int _selectionColumn;
 
         /// <summary>
         ///  Character count threshold until we wrap to the next line.
@@ -105,7 +104,6 @@ The end.
         partial void OnSelectionLengthChanged(int value)
             => UpdateSelectionInfo();
 
-
         partial void OnSelectionIndexChanged(int value)
             => UpdateSelectionInfo();
 
@@ -115,16 +113,17 @@ The end.
         private void UpdateSelectionInfo()
         {
             (SelectionRow, SelectionColumn) = GetRowAndColumnFromPosition(_selectionIndex);
+
             SelectionLines = (
                 SelectionRow,
                 GetRowAndColumnFromPosition(_selectionIndex + _selectionLength).Row);
         }
 
-        // Finds out, how the line breaks are coded, which unfortuantely
-        // is different for the respected textbox controls on differnt platforms.
+        // Finds out, how the line breaks are coded, which unfortunately
+        // is different for the respected textbox controls on different platforms.
         //
         // This could be done more reliably, by having a dedicated
-        // Property, which determines the Platform's behaviour directly
+        // Property, which determines the Platform's behavior directly
         // through a platform-depending binding. This works too, though,
         // without having that.
         private string? GetCarriageReturnStringBasedOnDocument()

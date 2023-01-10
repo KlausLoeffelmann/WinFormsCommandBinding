@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
+using System.Diagnostics;
 using System.Windows.Forms;
-using System.Windows.Input;
 
 namespace WinFormsCommandBindingDemo
 {
@@ -12,57 +11,17 @@ namespace WinFormsCommandBindingDemo
         public event EventHandler? CursorPositionChanged;
 
         private int _cursorPosition;
+        private int _everCounter;
 
         public EditorControl() : base()
         {
         }
 
-        protected override void OnBindingContextChanged(EventArgs e)
-        {
-            base.OnBindingContextChanged(e);
-            UpdateSelectionInfo();
-        }
-
-        protected override void OnKeyUp(KeyEventArgs e)
-        {
-            base.OnKeyUp(e);
-
-            var noReactionKeys = new[]
-            {
-                Keys.ShiftKey, Keys.ControlKey, Keys.Menu,
-                Keys.LWin, Keys.RWin, Keys.PrintScreen,
-                Keys.NumLock, Keys.Scroll,
-                Keys.F1, Keys.F2, Keys.F3, Keys.F4, Keys.F5, Keys.F6,
-                Keys.F7, Keys.F8, Keys.F9, Keys.F10, Keys.F11, Keys.F12
-            };
-
-            // If one of those keys has been pressed alone,
-            // it does nothing to the selection, and we bail.
-            if (!noReactionKeys
-                .Select(item => (e.KeyCode == item && e.KeyData == item))
-                .Any(item => item))
-            {
-                // Otherwise, the selection may have changed.
-                UpdateSelectionInfo();
-            }
-        }
-
-        protected override void OnTextChanged(EventArgs e)
-        {
-            base.OnTextChanged(e);
-            UpdateSelectionInfo();
-        }
-
-        protected override void OnMouseClick(MouseEventArgs e)
-        {
-            base.OnMouseClick(e);
-            UpdateSelectionInfo();
-        }
-
         private void UpdateSelectionInfo()
         {
-            CursorPosition = this.SelectionStart;
             OnSelectionLengthChanged(EventArgs.Empty);
+            CursorPosition = SelectionStart + SelectionLength;
+            throw new Exception();
         }
 
         [Bindable(BindableSupport.Yes)]
@@ -73,8 +32,13 @@ namespace WinFormsCommandBindingDemo
             get => _cursorPosition;
             set
             {
+                if (value == _cursorPosition)
+                {
+                    return;
+                }
+
+                Debug.Print($"--> Inside CursorPosition Setter: Value:{value}");
                 _cursorPosition = value;
-                ChangeCursorPositionCore();
                 OnCursorPositionChanged(EventArgs.Empty);
             }
         }
@@ -92,18 +56,32 @@ namespace WinFormsCommandBindingDemo
             set { }
         }
 
-        private void ChangeCursorPositionCore()
-        {
-            if (_cursorPosition != SelectionStart)
-            {
-                SelectionStart = CursorPosition;
-            }
-        }
-
         protected virtual void OnSelectionLengthChanged(EventArgs e)
             => SelectionLengthChanged?.Invoke(this, e);
 
         protected virtual void OnCursorPositionChanged(EventArgs e)
-            => CursorPositionChanged?.Invoke(this, e);
+        { 
+            CursorPositionChanged?.Invoke(this, e);
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+
+            // When EM_LINEFROMCHAR has been called, something changed with the Selection.
+            if (m.Msg == 0xd6)
+            {
+                this.BeginInvoke(() => 
+                {
+                    try
+                    {
+                        UpdateSelectionInfo();
+                    }
+                    catch (Exception)
+                    {
+                    }
+                });
+            }
+        }
     }
 }

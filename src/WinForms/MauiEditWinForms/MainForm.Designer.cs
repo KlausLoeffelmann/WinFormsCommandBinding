@@ -89,7 +89,7 @@ namespace WinFormsCommandBindingDemo
             // 
             // _insertDemoTextToolStripMenuItem
             // 
-            _insertDemoTextToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "InsertDemoTextCommandCommand", true));
+            _insertDemoTextToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "InsertDemoTextCommand", true));
             _insertDemoTextToolStripMenuItem.Name = "_insertDemoTextToolStripMenuItem";
             _insertDemoTextToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             _insertDemoTextToolStripMenuItem.Text = "&Insert demo text";
@@ -169,6 +169,7 @@ namespace WinFormsCommandBindingDemo
             // 
             // _editorSurface
             // 
+            _editorSurface.AcceptsReturn = true;
             _editorSurface.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             _editorSurface.DataBindings.Add(new System.Windows.Forms.Binding("CursorPosition", _mainFormControllerBindingSource, "SelectionIndex", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             _editorSurface.DataBindings.Add(new System.Windows.Forms.Binding("SelectionLength", _mainFormControllerBindingSource, "SelectionLength", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -233,7 +234,7 @@ namespace WinFormsCommandBindingDemo
             MainMenuStrip = _mainMenuStrip;
             Name = "MainForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            Text = "MainForm";
+            Text = "WinForms/MAUI Edit";
             DataContextChanged += MainForm_DataContextChanged;
             _mainMenuStrip.ResumeLayout(false);
             _mainMenuStrip.PerformLayout();
