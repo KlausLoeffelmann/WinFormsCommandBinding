@@ -5,28 +5,32 @@ using System.Diagnostics;
 
 namespace WinFormsCommandBinding.Models
 {
-    // Class implements INotifyPropertyChanged and simplifies it correct
-    // handling over BindableBase by using [CallingMemberName]
+    /// <summary>
+    ///  Main ViewModel for the WinForms/MAUI-Editor sample app. Encapsulated the full logic of the app.
+    /// </summary>
     public partial class MainFormController : WinFormsViewController
     {
+        // Holds the whole editor document.
         private string? _textDocument;
 
+        // semi-fast way to iterate quickly through the hole document, line-wise.
         private ReadOnlyMemory<char>[] _lines = Array.Empty<ReadOnlyMemory<char>>();
 
         /// <summary>
-        /// Gets the selection start- and endline based on SelectionIndex and SelectionLength
+        ///  Gets the selection start- and end line based on SelectionIndex and SelectionLength.
+        ///  Annotated with <see cref="ObservablePropertyAttribute"/>, so the property is automatically code-generated.
         /// </summary>
         [ObservableProperty]
         private (int StartLine, int EndLine) _selectionLines;
 
         /// <summary>
-        /// Current length of the selection.
+        ///  Current length of the selection.
         /// </summary>
         [ObservableProperty]
         private int _selectionLength;
 
         /// <summary>
-        /// Column where the Cursor is located.
+        ///  Column where the Cursor is located.
         /// </summary>
         [ObservableProperty]
         private int _selectionColumn;
@@ -39,20 +43,26 @@ namespace WinFormsCommandBinding.Models
 
         /// <summary>
         ///  The index of the first selected character 
-        ///  (or the current cursor position index in to the doc).
+        ///  (or the current cursor position index in to the editor's doc).
         /// </summary>
         [ObservableProperty]
         private int _selectionIndex;
 
         /// <summary>
-        ///  Character count threshold until we wrap to the next line.
+        ///  Character count threshold until we wrap to the next line when calling the wrap command.
         /// </summary>
         [ObservableProperty]
         private int _charCountWrapThreshold = 60;
 
+        /// <summary>
+        ///  Creates an instance of this class.
+        /// </summary>
+        /// <param name="serviceProvider"></param>
         public MainFormController(IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
+            // The initial sample text:
+
             TextDocument = @"This is a test document.
 It doesn't contain a lot of information.
 But it contains enough, to test this app out.
@@ -67,6 +77,9 @@ The end.
 ";
         }
 
+        /// <summary>
+        ///  Provides the Document for the Editor.
+        /// </summary>
         public string? TextDocument
         {
             get => _textDocument;
@@ -93,11 +106,14 @@ The end.
             => GetCarriageReturnStringBasedOnDocument() ?? "\r\n";
 
         /// <summary>
-        /// Returns a list of lines of the document.
+        ///  Returns a list of lines of the document.
         /// </summary>
         public ReadOnlyMemory<char>[] Lines
             => _lines;
 
+        // This is an example how to implement the On...Changed method for a property,
+        // which has been automatically generated. The MVVM Community Toolkit provides 
+        // partial On...Methods methods for generated properties, which can be ament like this:
         partial void OnSelectionLinesChanged((int StartLine, int EndLine) value)
             => Debug.Print($"SelectionLine: {_selectionLines}");
 
@@ -108,7 +124,7 @@ The end.
             => UpdateSelectionInfo();
 
         /// <summary>
-        /// Triggers calculation of SelectionRow, SelectionColumn and SelectionLines.
+        ///  Triggers calculation of SelectionRow, SelectionColumn and SelectionLines.
         /// </summary>
         private void UpdateSelectionInfo()
         {
@@ -124,8 +140,8 @@ The end.
         //
         // This could be done more reliably, by having a dedicated
         // Property, which determines the Platform's behavior directly
-        // through a platform-depending binding. This works too, though,
-        // without having that.
+        // through a platform-depending binding.
+        // But this here works too.
         private string? GetCarriageReturnStringBasedOnDocument()
         {
             if (TextDocument is null)
@@ -185,7 +201,7 @@ The end.
             return lines.ToArray();
         }
 
-        // Calculates the character index in to the document from a linenumber.
+        // Calculates the character index in to the document from a line number.
         private int CharPosFromLineNumber(int lineNumber)
         {
             if (lineNumber>Lines.Length)

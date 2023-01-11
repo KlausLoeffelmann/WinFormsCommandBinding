@@ -3,6 +3,9 @@ using System.Runtime.CompilerServices;
 
 namespace WinFormsCommandBinding.Models
 {
+    /// <summary>
+    ///  Simple implementation of a ViewModel that implements <see cref="INotifyPropertyChanged"/>.
+    /// </summary>
     public class SimpleCommandViewModel : INotifyPropertyChanged
     {
         // The event that is fired when a property changes.
@@ -14,6 +17,9 @@ namespace WinFormsCommandBinding.Models
         private string _sampleCommandResult = "* not invoked yet *";
         private int _invokeCount;
 
+        /// <summary>
+        ///  Creates a new instance of the <see cref="SimpleCommandViewModel"/> class.
+        /// </summary>
         public SimpleCommandViewModel()
         {
             _sampleCommand = new RelayCommand(ExecuteSampleCommand, CanExecuteSampleCommand);
@@ -51,6 +57,7 @@ namespace WinFormsCommandBinding.Models
         public RelayCommand SampleCommand
         {
             get => _sampleCommand;
+
             set
             {
                 if (_sampleCommand == value)

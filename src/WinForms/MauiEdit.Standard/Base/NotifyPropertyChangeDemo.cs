@@ -3,22 +3,26 @@ using System.Runtime.CompilerServices;
 
 namespace WinFormsCommandBinding.Models
 {
+    /// <summary>
+    ///  Simple implementation example of <see cref="INotifyPropertyChanged"/>.
+    /// </summary>
     public class SimpleNotifyChangedImplementation : INotifyPropertyChanged
     {
-        // The event that is fired when a property changes.
+        // The event that fires when we want listening instances that one of our properties has changed.
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        // Backing field for the property.
+        // Backing fields for some example properties.
         private string? _lastName;
         private string? _firstName;
 
-        // The property that is being monitored.
+        // A property that is being monitored.
         public string? LastName
         {
             get => _lastName;
             
             set
             {
+                // Nothing really changed, so we can skip the update.
                 if (_lastName == value)
                 {
                     return;
@@ -26,7 +30,7 @@ namespace WinFormsCommandBinding.Models
                 
                 _lastName = value;
 
-                // Notify the UI that the property has changed.
+                // Notify listening Views that this property has changed.
                 // Using CallerMemberName at the call site will automatically fill in
                 // the name of the property that changed.
                 OnPropertyChanged();
@@ -49,7 +53,8 @@ namespace WinFormsCommandBinding.Models
             }
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = "") 
+        // Properties should call this method to notify listening instances that the value has changed.
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
