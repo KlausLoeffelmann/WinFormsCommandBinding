@@ -13,7 +13,7 @@ public partial class MainFormController : WinFormsViewController
     // Holds the whole editor document.
     private string? _textDocument;
 
-    // semi-fast way to iterate quickly through the hole document, line-wise.
+    // Backing field to iterate line-wise through the whole document.
     private ReadOnlyMemory<char>[] _lines = Array.Empty<ReadOnlyMemory<char>>();
 
     /// <summary>
@@ -30,13 +30,13 @@ public partial class MainFormController : WinFormsViewController
     private int _selectionLength;
 
     /// <summary>
-    ///  Column where the Cursor is located.
+    ///  Column where the cursor is located.
     /// </summary>
     [ObservableProperty]
     private int _selectionColumn;
 
     /// <summary>
-    ///  Row where the Cursor is located.
+    ///  Row where the cursor is located.
     /// </summary>
     [ObservableProperty]
     private int _selectionRow;
@@ -62,7 +62,6 @@ public partial class MainFormController : WinFormsViewController
         : base(serviceProvider)
     {
         // The initial sample text:
-
         TextDocument = $"""
                 This is a test document.
                 It doesn't contain a lot of information.
