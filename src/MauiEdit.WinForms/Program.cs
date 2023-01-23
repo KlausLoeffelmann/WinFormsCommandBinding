@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using MauiEdit.Services;
+using MauiEdit.Services.Extension;
 using MauiEdit.ViewModels;
-using WinFormsCommandBinding.Models.Service;
-using WinFormsCommandBindingDemo.Services;
 
 namespace WinFormsCommandBindingDemo
 {

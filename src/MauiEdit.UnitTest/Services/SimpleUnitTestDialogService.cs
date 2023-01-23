@@ -1,5 +1,5 @@
-﻿using MauiEdit.ViewModels;
-using WinFormsCommandBinding.Models.Service;
+﻿using MauiEdit.Services;
+using MauiEdit.ViewModels;
 
 namespace MauiEdit.UnitTest;
 
@@ -8,7 +8,7 @@ public class SimpleUnitTestDialogService : IDialogService
     public event EventHandler<NavigationEventArgs>? NavigatedToRequested;
     public event EventHandler<ShowMessageBoxResultEventArgs>? ShowMessageBoxRequested;
 
-    public async Task NavigateToAsync(WinFormsViewController registeredController, bool modalIfPossible = false)
+    public async Task NavigateToAsync(ViewController registeredController, bool modalIfPossible = false)
     {
         NavigatedToRequested?.Invoke(
             this,

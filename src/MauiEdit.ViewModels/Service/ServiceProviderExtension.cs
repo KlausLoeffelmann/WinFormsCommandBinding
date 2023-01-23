@@ -1,19 +1,18 @@
 ﻿using System;
 
-namespace WinFormsCommandBinding.Models.Service
+namespace MauiEdit.Services.Extension;
+
+public static class ServiceProviderExtension
 {
-    public static class ServiceProviderExtension
+    static public T GetRequiredService<T>(this IServiceProvider serviceProvider)
     {
-        static public T GetRequiredService<T>(this IServiceProvider serviceProvider)
+        if (serviceProvider.GetService(typeof(T)) is T service)
         {
-            if (serviceProvider.GetService(typeof(T)) is T service)
-            {
-                return service;
-            }
-            else
-            {
-                throw new InvalidOperationException($"Service {typeof(T).Name} not found.");
-            }
+            return service;
+        }
+        else
+        {
+            throw new InvalidOperationException($"Service {typeof(T).Name} not found.");
         }
     }
 }

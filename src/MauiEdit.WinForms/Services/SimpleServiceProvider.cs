@@ -1,6 +1,5 @@
 ﻿using System;
-using WinFormsCommandBinding.Models.Service;
-using WinFormsCommandBindingDemo.Services;
+using MauiEdit.Services;
 
 namespace WinFormsCommandBindingDemo
 {

@@ -8,7 +8,7 @@ namespace MauiEdit.ViewModels;
 /// <summary>
 ///  Main ViewModel for the WinForms/MAUI-Editor sample app. Encapsulated the full logic of the app.
 /// </summary>
-public partial class MainFormController : WinFormsViewController
+public partial class MainFormController : ViewController
 {
     // Holds the whole editor document.
     private string? _textDocument;

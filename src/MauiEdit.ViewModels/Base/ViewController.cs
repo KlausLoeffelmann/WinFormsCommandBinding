@@ -7,12 +7,12 @@ namespace MauiEdit.ViewModels;
 ///  Base class for all view models. Takes a service provider in addition, so we can 
 ///  use <see cref="IServiceProvider"/> as an easy way for doing dependency injection.
 /// </summary>
-public abstract class WinFormsViewController : ObservableObject
+public abstract class ViewController : ObservableObject
 {
     /// <summary>
     ///  Creates an instance of this class and initializes the <see cref="ServiceProvider"/> property.
     /// </summary>
-    public WinFormsViewController(IServiceProvider serviceProvider) : base()
+    public ViewController(IServiceProvider serviceProvider) : base()
     {
         ServiceProvider = serviceProvider;
     }

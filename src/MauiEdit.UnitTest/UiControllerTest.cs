@@ -1,5 +1,5 @@
-﻿using MauiEdit.ViewModels;
-using WinFormsCommandBinding.Models.Service;
+﻿using MauiEdit.Services;
+using MauiEdit.ViewModels;
 
 namespace MauiEdit.UnitTest;
 

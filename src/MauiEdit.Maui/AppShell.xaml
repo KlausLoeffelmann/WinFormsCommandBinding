@@ -12,9 +12,9 @@
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
-    <MenuItem Text="New..." Command="{Binding TestAsyncCommand}" />
+    <MenuItem Text="New..." Command="{Binding NewDocumentCommand}" />
 
-    <MenuItem Text="Options"/>
+    <MenuItem Text="Options" IsEnabled="True" Command="{Binding ShowToolsOptionsCommand}" />
     <MenuItem Text="About"/>
 
 </Shell>

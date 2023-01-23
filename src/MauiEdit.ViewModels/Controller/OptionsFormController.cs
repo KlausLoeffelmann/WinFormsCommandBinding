@@ -9,7 +9,7 @@ namespace MauiEdit.ViewModels;
 
 // Note: This class does not get serialized in this demo, but the
 // binding is working.
-public class OptionsFormController : WinFormsViewController
+public class OptionsFormController : ViewController
 {
     private RelayCommand _okCommand;
 

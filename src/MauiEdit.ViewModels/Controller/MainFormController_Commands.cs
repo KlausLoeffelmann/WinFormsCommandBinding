@@ -2,13 +2,14 @@
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using WinFormsCommandBinding.Models.Service;
+using MauiEdit.Services;
+using MauiEdit.Services.Extension;
 
 namespace MauiEdit.ViewModels;
 
 // Class implements INotifyPropertyChanged and simplifies it correct
 // handling over BindableBase by using [CallingMemberName]
-public partial class MainFormController : WinFormsViewController
+public partial class MainFormController : ViewController
 {
     public const string YesButtonText = "Yes";
     public const string NoButtonText = "No";
@@ -152,4 +153,3 @@ public partial class MainFormController : WinFormsViewController
         await dialogService.NavigateToAsync(optionsFormController, true);
     }
 }
-

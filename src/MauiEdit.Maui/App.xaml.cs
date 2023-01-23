@@ -1,5 +1,5 @@
-﻿using MauiEdit.ViewModels;
-using IDialogService = WinFormsCommandBinding.Models.Service.IDialogService;
+﻿using MauiEdit.Services;
+using MauiEdit.ViewModels;
 
 namespace MauiEdit;
 

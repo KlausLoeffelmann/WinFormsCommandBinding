@@ -1,6 +1,6 @@
 ﻿using MauiEdit.Services;
+using MauiEdit.ViewModels;
 using Microsoft.Extensions.Logging;
-using WinFormsCommandBinding.Models.Service;
 
 namespace MauiEdit;
 
@@ -11,7 +11,13 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
 
         // We pass the dialog service to the service provider, so we can use it in the view models.
-        builder.Services.AddSingleton(typeof(IDialogService), new MauiDialogService());
+        var mauiDialogService = new MauiDialogService();
+        builder.Services.AddSingleton(typeof(IDialogService), mauiDialogService);
+
+        mauiDialogService
+        .RegisterUIController(
+                uiController: typeof(OptionsFormController),
+                viewAsForm: typeof(OptionsPage));
 
         builder
             .UseMauiApp<App>()

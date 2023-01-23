@@ -5,13 +5,13 @@ namespace MauiEdit.UnitTest;
 public class NavigationEventArgs : EventArgs
 {
     public NavigationEventArgs(
-        WinFormsViewController? registeredController = null,
+        ViewController? registeredController = null,
         bool modalIfPossible = false)
     {
         RegisteredController = registeredController;
         ModalIfPossible = modalIfPossible;
     }
 
-    public WinFormsViewController? RegisteredController { get; }
+    public ViewController? RegisteredController { get; }
     public bool ModalIfPossible { get; }
 }
