@@ -42,25 +42,25 @@ public class OptionsFormController : WinFormsViewController
     public bool BoolOption
     {
         get => _boolOption;
-        set => base.SetProperty(ref _boolOption, value);
+        set => SetProperty(ref _boolOption, value);
     }
 
     public string? TextOption
     {
         get => _textOption;
-        set => base.SetProperty(ref _textOption, value);
+        set => SetProperty(ref _textOption, value);
     }
 
     public int NumOption
     {
         get => _numOption;
-        set => base.SetProperty(ref _numOption, value);
+        set => SetProperty(ref _numOption, value);
     }
 
     public DateTime DateOption
     {
         get => _dateOption;
-        set => base.SetProperty(ref _dateOption, value);
+        set => SetProperty(ref _dateOption, value);
     }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)

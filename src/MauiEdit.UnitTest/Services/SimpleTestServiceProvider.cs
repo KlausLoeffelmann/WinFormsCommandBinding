@@ -2,22 +2,24 @@
 
 namespace MauiEdit.UnitTest;
 
-public class SimpleTestServiceProvider : IServiceProvider {
-    private static IServiceProvider? _instance;
+public class SimpleTestServiceProvider : IServiceProvider
+{
+    private static IServiceProvider? s_instance;
 
-    private IDialogService? _winFormsDialogService;
+    private IDialogService? _unitTestDialogService;
 
     public object GetService(Type serviceType)
-        => serviceType switch {
+        => serviceType switch
+        {
             Type requestedType when typeof(IDialogService).IsAssignableFrom(requestedType)
-                => _winFormsDialogService ??= new SimpleUnitTestDialogService(),
+                => _unitTestDialogService ??= new SimpleUnitTestDialogService(),
 
             Type requestedType when typeof(SimpleUnitTestDialogService).IsAssignableFrom(requestedType)
-                => _winFormsDialogService ??= new SimpleUnitTestDialogService(),
+                => _unitTestDialogService ??= new SimpleUnitTestDialogService(),
 
             _ => throw new NotImplementedException($"Requested service '{serviceType}' is not supported.")
         };
 
     public static IServiceProvider GetInstance()
-        => _instance ??= new SimpleTestServiceProvider();
+        => s_instance ??= new SimpleTestServiceProvider();
 }

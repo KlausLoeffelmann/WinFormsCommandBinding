@@ -2,7 +2,6 @@
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using WinFormsCommandBinding.Models;
 using WinFormsCommandBinding.Models.Service;
 
 namespace MauiEdit.ViewModels;
@@ -90,7 +89,7 @@ public partial class MainFormController : WinFormsViewController
     [RelayCommand(CanExecute = nameof(CanExecuteContentDependingCommands))]
     private async Task RewrapAsync()
     {
-        if (String.IsNullOrEmpty(TextDocument))
+        if (string.IsNullOrEmpty(TextDocument))
             return;
 
         var cursorPos = SelectionIndex;

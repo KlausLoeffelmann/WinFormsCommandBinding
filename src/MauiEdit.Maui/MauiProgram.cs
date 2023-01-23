@@ -9,6 +9,8 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
+
+        // We pass the dialog service to the service provider, so we can use it in the view models.
         builder.Services.AddSingleton(typeof(IDialogService), new MauiDialogService());
 
         builder

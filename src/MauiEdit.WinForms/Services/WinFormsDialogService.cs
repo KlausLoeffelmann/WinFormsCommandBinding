@@ -12,7 +12,7 @@ namespace WinFormsCommandBindingDemo.Services
     {
         private readonly Dictionary<Type, Type> _controllerFormTypeLookup = new();
 
-        private static SynchronizationContext? s_winFormsSyncContext 
+        private static readonly SynchronizationContext? s_winFormsSyncContext 
             = SynchronizationContext.Current;
 
         private static WinFormsAsyncHelper? s_asyncHelper;
@@ -74,7 +74,6 @@ namespace WinFormsCommandBindingDemo.Services
                 Heading = heading,
                 Text = message,
 
-                // TODO: This has room for improvement!
                 Icon = TaskDialogIcon.Information
             };
 

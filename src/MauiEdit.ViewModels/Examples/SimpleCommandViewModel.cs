@@ -31,6 +31,7 @@ public class SimpleCommandViewModel : INotifyPropertyChanged
     public bool SampleCommandAvailability
     {
         get => _sampleCommandAvailability;
+        
         set
         {
             if (_sampleCommandAvailability == value)
@@ -76,6 +77,7 @@ public class SimpleCommandViewModel : INotifyPropertyChanged
     public string SampleCommandResult
     {
         get => _sampleCommandResult;
+        
         set
         {
             if (_sampleCommandResult == value)

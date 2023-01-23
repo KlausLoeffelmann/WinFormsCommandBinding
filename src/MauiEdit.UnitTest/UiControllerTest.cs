@@ -13,10 +13,11 @@ public class MainFormUiControllerTest {
 
         Assert.NotNull(dialogService);
 
-        MainFormController mainFormController = new(service);
-
-        // We clear the main document.
-        mainFormController.TextDocument = string.Empty;
+        MainFormController mainFormController = new(service)
+        {
+            // We clear the main document.
+            TextDocument = string.Empty
+        };
 
         // We assert, that the New command is disabled, and cannot be called.
         Assert.False(mainFormController.NewDocumentCommand.CanExecute(null));
@@ -37,7 +38,7 @@ public class MainFormUiControllerTest {
 
         // We test the second time; our state machine returns "Yes" the first time.
         await mainFormController.NewDocumentCommand.ExecuteAsync(null);
-        Assert.Equal(String.Empty, mainFormController.TextDocument);
+        Assert.Equal(string.Empty, mainFormController.TextDocument);
 
         void DialogService_ShowMessageBoxRequested(object? sender, ShowMessageBoxResultEventArgs e)
             => e.ResultButtonText = dialogState++ switch {

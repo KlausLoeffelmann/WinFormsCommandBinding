@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace WinFormsCommandBinding.Examples;
 
@@ -18,10 +17,10 @@ public class SimpleEditorController : INotifyPropertyChanged
     }
 
     private void ExecuteRelayCommand()
-        => TextDocument = String.Empty;
+        => TextDocument = string.Empty;
 
     private bool CanExecuteRelayCommand()
-        => TextDocument != String.Empty;
+        => TextDocument != string.Empty;
 
     public RelayCommand? NewCommand
     {
@@ -43,7 +42,7 @@ public class SimpleEditorController : INotifyPropertyChanged
 
         set
         {
-            var wasEmpty = String.IsNullOrEmpty(_textDocument);
+            var wasEmpty = string.IsNullOrEmpty(_textDocument);
 
             if (!Equals(_textDocument, value))
             {

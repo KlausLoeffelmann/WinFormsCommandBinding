@@ -18,7 +18,7 @@ namespace WinFormsCommandBindingDemo
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // // Comment this out, to enable the simple WinForms binding demo forms.
+            // // Comment this out, to enable the simple WinForms binding demo.
             // Application.Run(new SimpleTestForm());
             // return;
             
@@ -28,6 +28,7 @@ namespace WinFormsCommandBindingDemo
             WinFormsDialogService.RegisterWinFormsAsyncHelper(WinFormsAsyncHelper.GetInstance(mainForm));
 
             var serviceProvider=SimpleServiceProvider.GetInstance();
+            
             serviceProvider
                 .GetRequiredService<WinFormsDialogService>()
                 .RegisterUIController(

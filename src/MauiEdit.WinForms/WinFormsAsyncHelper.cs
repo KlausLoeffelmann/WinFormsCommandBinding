@@ -7,7 +7,7 @@ namespace WinFormsCommandBindingDemo
 {
     internal class WinFormsAsyncHelper
     {
-        private Control _marshallingControl;
+        private readonly Control _marshallingControl;
         private static WinFormsAsyncHelper? s_instance;
 
         private WinFormsAsyncHelper(Control marshallingControl)

@@ -8,7 +8,7 @@ namespace WinFormsCommandBindingDemo
     {
         public class SimpleServiceProvider : IServiceProvider
         {
-            private static IServiceProvider? _instance;
+            private static IServiceProvider? s_instance;
 
             private IDialogService? _winFormsDialogService;
 
@@ -25,7 +25,7 @@ namespace WinFormsCommandBindingDemo
                 };
 
             public static IServiceProvider GetInstance()
-                => _instance ??= new SimpleServiceProvider();
+                => s_instance ??= new SimpleServiceProvider();
         }
     }
 }

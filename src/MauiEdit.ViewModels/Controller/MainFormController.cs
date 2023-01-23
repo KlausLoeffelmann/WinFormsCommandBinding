@@ -84,7 +84,7 @@ public partial class MainFormController : WinFormsViewController
 
         set
         {
-            var wasEmpty = String.IsNullOrEmpty(_textDocument);
+            var wasEmpty = string.IsNullOrEmpty(_textDocument);
 
             if (SetProperty(ref _textDocument, value))
             {
@@ -111,7 +111,7 @@ public partial class MainFormController : WinFormsViewController
 
     // This is an example how to implement the On...Changed method for a property,
     // which has been automatically generated. The MVVM Community Toolkit provides 
-    // partial On...Methods methods for generated properties, which can be ament like this:
+    // partial On...Methods methods for generated properties which can be amended like this:
     partial void OnSelectionLinesChanged((int StartLine, int EndLine) value)
         => Debug.Print($"SelectionLine: {_selectionLines}");
 
@@ -137,7 +137,7 @@ public partial class MainFormController : WinFormsViewController
     // is different for the respected textbox controls on different platforms.
     //
     // This could be done more reliably, by having a dedicated
-    // Property, which determines the Platform's behavior directly
+    // Property, which determines the platform's behavior directly
     // through a platform-depending binding.
     // But this here works too.
     private string? GetCarriageReturnStringBasedOnDocument()

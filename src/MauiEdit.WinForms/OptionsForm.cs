@@ -12,10 +12,5 @@ namespace WinFormsCommandBindingDemo
 
         private void OptionsForm_AssignDataContext(object sender, EventArgs e)
             => _optionsFormControllerBindingSource.DataSource = DataContext;
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("test.");
-        }
     }
 }

@@ -3,11 +3,13 @@ using WinFormsCommandBinding.Models.Service;
 
 namespace MauiEdit.UnitTest;
 
-public class SimpleUnitTestDialogService : IDialogService {
+public class SimpleUnitTestDialogService : IDialogService
+{
     public event EventHandler<NavigationEventArgs>? NavigatedToRequested;
     public event EventHandler<ShowMessageBoxResultEventArgs>? ShowMessageBoxRequested;
 
-    public async Task NavigateToAsync(WinFormsViewController registeredController, bool modalIfPossible = false) {
+    public async Task NavigateToAsync(WinFormsViewController registeredController, bool modalIfPossible = false)
+    {
         NavigatedToRequested?.Invoke(
             this,
             new NavigationEventArgs(
@@ -17,15 +19,19 @@ public class SimpleUnitTestDialogService : IDialogService {
         await Task.CompletedTask;
     }
 
-    public void SetMarshallingContext(object syncContext) {
+    public void SetMarshallingContext(object syncContext)
+    {
         throw new NotImplementedException();
     }
 
-    public Task<string> ShowMessageBoxAsync(string title, string heading, string message, params string[] buttons) {
+    public Task<string> ShowMessageBoxAsync(
+        string title, string heading, string message, params string[] buttons)
+    {
         ShowMessageBoxResultEventArgs eArgs = new();
         ShowMessageBoxRequested?.Invoke(this, eArgs);
 
-        if (eArgs.ResultButtonText is null) {
+        if (eArgs.ResultButtonText is null)
+        {
             throw new NullReferenceException("MessageBox test result can't be null.");
         }
 
