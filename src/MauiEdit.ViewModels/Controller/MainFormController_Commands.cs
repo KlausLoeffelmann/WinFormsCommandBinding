@@ -149,6 +149,9 @@ public partial class MainFormController : ViewController
     {
         var dialogService = ServiceProvider.GetRequiredService<IDialogService>();
         var optionsFormController = new OptionsFormController(ServiceProvider);
+
+        // Set this to something meaningful.
+        optionsFormController.DateOption = DateTime.Now.Date;
         
         string dialogResult = await dialogService.ShowModalAsync(optionsFormController);
         
