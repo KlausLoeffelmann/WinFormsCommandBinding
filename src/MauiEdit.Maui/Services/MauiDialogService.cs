@@ -9,23 +9,54 @@ internal class MauiDialogService : IDialogService
     private Page? _marshallingContextAsPage;
     private readonly Dictionary<Type, Type> _controllerFormTypeLookup = new();
 
-    public async Task NavigateToAsync(ViewController registeredController, bool modalIfPossible = false)
+    public async Task<string> ShowModalAsync(ModalViewController registeredController)
     {
-        if (_marshallingContextAsPage is null)
+        TaskCompletionSource<string> taskCompletionSource = new TaskCompletionSource<string>();
+
+        // We need the controller (ViewModel) which is assigned to the View (Page) in any case.
+        ArgumentNullException.ThrowIfNull(registeredController);
+
+        // We need to be notified when the View (Page) is closed.
+        registeredController.Closed += ModalViewClosedHandler;
+
+        try
         {
-            throw new NullReferenceException($"The marshalling context (a Maui Page) has not been setup.\n" +
-                $"Call '{nameof(SetMarshallingContext)}' on '{nameof(IDialogService)}' to setup the page.");
+            // We need a page to navigate the modal view stack.
+            if (_marshallingContextAsPage is null)
+            {
+                throw new NullReferenceException($"The marshalling context (a Maui Page) has not been setup.\n" +
+                    $"Call '{nameof(SetMarshallingContext)}' on '{nameof(IDialogService)}' to setup the page.");
+            }
+
+            if (_controllerFormTypeLookup.TryGetValue(registeredController.GetType(), out var viewType))
+            {
+                if (Activator.CreateInstance(viewType) is Page view)
+                {
+                    // Important: OKCommand and CancelCommand MUST be bound inside the (modal) view.
+                    // The ModalViewController class is providing those commands.
+                    view.BindingContext = registeredController;
+
+                    await _marshallingContextAsPage.Navigation.PushModalAsync(view);
+
+                    // Wait for the modal view to be closed. That happens below in ModalViewClosedHandler.
+                    return await taskCompletionSource.Task;
+                }
+            }
+
+            throw new Exception($"Could not create the view of type {viewType}.");
+        }
+        finally
+        {
+            registeredController.Closed -= ModalViewClosedHandler;
         }
 
-        if (_controllerFormTypeLookup.TryGetValue(registeredController.GetType(), out var viewType))
+        async void ModalViewClosedHandler(object? s, ModalViewResultEventArgs e)
         {
-            if (Activator.CreateInstance(viewType) is Page view)
-            {
-                view.BindingContext = registeredController;
+            // On OK or Cancel, we need to pop the modal view stack.
+            await _marshallingContextAsPage!.Navigation.PopModalAsync();
 
-                // For simplicity we're showing the Page on the modal stack always.
-                await _marshallingContextAsPage.Navigation.PushModalAsync(view);
-            }
+            // And since we have the result from the respective commands, we can set the result based on that.
+            taskCompletionSource.SetResult(e.Result);
         }
     }
 

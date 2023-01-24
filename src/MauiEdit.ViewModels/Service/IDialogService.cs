@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using MauiEdit.ViewModels;
+﻿using MauiEdit.ViewModels;
 
 namespace MauiEdit.Services;
 
@@ -8,6 +7,6 @@ namespace MauiEdit.Services;
 public interface IDialogService
 {
     void SetMarshallingContext(object syncContext);
-    Task NavigateToAsync(ViewController RegisteredController, bool modalIfPossible = false);
+    Task<string> ShowModalAsync(ModalViewController registeredController);
     Task<string> ShowMessageBoxAsync(string title, string heading, string message, params string[] buttons);
 }

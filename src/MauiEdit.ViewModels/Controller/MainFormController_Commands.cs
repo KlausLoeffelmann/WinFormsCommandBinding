@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using MauiEdit.Services;
 using MauiEdit.Services.Extension;
@@ -150,6 +149,10 @@ public partial class MainFormController : ViewController
     {
         var dialogService = ServiceProvider.GetRequiredService<IDialogService>();
         var optionsFormController = new OptionsFormController(ServiceProvider);
-        await dialogService.NavigateToAsync(optionsFormController, true);
+        
+        string dialogResult = await dialogService.ShowModalAsync(optionsFormController);
+        
+        Debug.Print($"Dialog result: {dialogResult}");
+        Debug.Print($"Dialog content: {optionsFormController}");
     }
 }

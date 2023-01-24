@@ -5,18 +5,14 @@ namespace MauiEdit.UnitTest;
 
 public class SimpleUnitTestDialogService : IDialogService
 {
-    public event EventHandler<NavigationEventArgs>? NavigatedToRequested;
     public event EventHandler<ShowMessageBoxResultEventArgs>? ShowMessageBoxRequested;
 
-    public async Task NavigateToAsync(ViewController registeredController, bool modalIfPossible = false)
+    public async Task<string> ShowModalAsync(ModalViewController registeredController)
     {
-        NavigatedToRequested?.Invoke(
-            this,
-            new NavigationEventArgs(
-                registeredController,
-                modalIfPossible));
+        ShowMessageBoxResultEventArgs eArgs = new();
+        ShowMessageBoxRequested?.Invoke(this, eArgs);
 
-        await Task.CompletedTask;
+        return await Task.FromResult(eArgs.ResultButtonText ?? "Cancel");
     }
 
     public void SetMarshallingContext(object syncContext)
@@ -24,7 +20,7 @@ public class SimpleUnitTestDialogService : IDialogService
         throw new NotImplementedException();
     }
 
-    public Task<string> ShowMessageBoxAsync(
+    public async Task<string> ShowMessageBoxAsync(
         string title, string heading, string message, params string[] buttons)
     {
         ShowMessageBoxResultEventArgs eArgs = new();
@@ -35,6 +31,6 @@ public class SimpleUnitTestDialogService : IDialogService
             throw new NullReferenceException("MessageBox test result can't be null.");
         }
 
-        return Task.FromResult(eArgs.ResultButtonText);
+        return await Task.FromResult(eArgs.ResultButtonText ?? "Cancel");
     }
 }

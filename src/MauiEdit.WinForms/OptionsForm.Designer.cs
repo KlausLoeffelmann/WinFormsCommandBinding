@@ -29,141 +29,134 @@ namespace WinFormsCommandBindingDemo
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this._okButton = new System.Windows.Forms.Button();
-            this._optionsFormControllerBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.commandButton1 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            ((System.ComponentModel.ISupportInitialize)(this._optionsFormControllerBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            _okButton = new System.Windows.Forms.Button();
+            commandButton1 = new System.Windows.Forms.Button();
+            label1 = new System.Windows.Forms.Label();
+            checkBox1 = new System.Windows.Forms.CheckBox();
+            _optionsFormControllerBindingSource = new System.Windows.Forms.BindingSource(components);
+            textBox1 = new System.Windows.Forms.TextBox();
+            label2 = new System.Windows.Forms.Label();
+            numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            label3 = new System.Windows.Forms.Label();
+            dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            ((System.ComponentModel.ISupportInitialize)_optionsFormControllerBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            SuspendLayout();
             // 
             // _okButton
             // 
-            this._okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._okButton.DataBindings.Add(new System.Windows.Forms.Binding("Command", this._optionsFormControllerBindingSource, "OKCommand", true));
-            this._okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this._okButton.Location = new System.Drawing.Point(250, 221);
-            this._okButton.Name = "_okButton";
-            this._okButton.Size = new System.Drawing.Size(114, 28);
-            this._okButton.TabIndex = 7;
-            this._okButton.Text = "OK";
-            this._okButton.UseVisualStyleBackColor = true;
-            // 
-            // _optionsFormControllerBindingSource
-            // 
-            this._optionsFormControllerBindingSource.DataSource = typeof(MauiEdit.ViewModels.OptionsFormController);
+            _okButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            _okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            _okButton.Location = new System.Drawing.Point(250, 221);
+            _okButton.Name = "_okButton";
+            _okButton.Size = new System.Drawing.Size(114, 28);
+            _okButton.TabIndex = 7;
+            _okButton.Text = "OK";
+            _okButton.UseVisualStyleBackColor = true;
             // 
             // commandButton1
             // 
-            this.commandButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.commandButton1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.commandButton1.Location = new System.Drawing.Point(369, 221);
-            this.commandButton1.Name = "commandButton1";
-            this.commandButton1.Size = new System.Drawing.Size(114, 28);
-            this.commandButton1.TabIndex = 8;
-            this.commandButton1.Text = "Cancel";
-            this.commandButton1.UseVisualStyleBackColor = true;
+            commandButton1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            commandButton1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            commandButton1.Location = new System.Drawing.Point(369, 221);
+            commandButton1.Name = "commandButton1";
+            commandButton1.Size = new System.Drawing.Size(114, 28);
+            commandButton1.TabIndex = 8;
+            commandButton1.Text = "Cancel";
+            commandButton1.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Text Option:";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(26, 15);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(89, 20);
+            label1.TabIndex = 0;
+            label1.Text = "Text Option:";
             // 
             // checkBox1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this._optionsFormControllerBindingSource, "BoolOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Command", this._optionsFormControllerBindingSource, "OKCommand", true));
-            this.checkBox1.Location = new System.Drawing.Point(181, 60);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(145, 24);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "CheckBox Option";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.AutoSize = true;
+            checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", _optionsFormControllerBindingSource, "BoolOption", true));
+            checkBox1.Location = new System.Drawing.Point(181, 60);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new System.Drawing.Size(145, 24);
+            checkBox1.TabIndex = 2;
+            checkBox1.Text = "CheckBox Option";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // _optionsFormControllerBindingSource
+            // 
+            _optionsFormControllerBindingSource.DataSource = typeof(MauiEdit.ViewModels.OptionsFormController);
             // 
             // textBox1
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this._optionsFormControllerBindingSource, "TextOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.textBox1.Location = new System.Drawing.Point(181, 12);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(301, 27);
-            this.textBox1.TabIndex = 1;
+            textBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", _optionsFormControllerBindingSource, "TextOption", true));
+            textBox1.Location = new System.Drawing.Point(181, 12);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new System.Drawing.Size(301, 27);
+            textBox1.TabIndex = 1;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 108);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(118, 20);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Numeric Option:";
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(26, 108);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(118, 20);
+            label2.TabIndex = 3;
+            label2.Text = "Numeric Option:";
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this._optionsFormControllerBindingSource, "NumOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.numericUpDown1.Location = new System.Drawing.Point(181, 106);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(301, 27);
-            this.numericUpDown1.TabIndex = 4;
+            numericUpDown1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", _optionsFormControllerBindingSource, "NumericOption", true));
+            numericUpDown1.Location = new System.Drawing.Point(181, 106);
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new System.Drawing.Size(301, 27);
+            numericUpDown1.TabIndex = 4;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(26, 158);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 20);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Numeric Option:";
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(26, 158);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(94, 20);
+            label3.TabIndex = 5;
+            label3.Text = "Date Option:";
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateTimePicker1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this._optionsFormControllerBindingSource, "NumOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.dateTimePicker1.Location = new System.Drawing.Point(181, 153);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(301, 27);
-            this.dateTimePicker1.TabIndex = 6;
+            dateTimePicker1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            dateTimePicker1.DataBindings.Add(new System.Windows.Forms.Binding("Value", _optionsFormControllerBindingSource, "DateOption", true));
+            dateTimePicker1.Location = new System.Drawing.Point(181, 153);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new System.Drawing.Size(301, 27);
+            dateTimePicker1.TabIndex = 6;
             // 
             // OptionsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(494, 260);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.commandButton1);
-            this.Controls.Add(this._okButton);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "OptionsForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "OptionsForm";
-            this.DataContextChanged += new System.EventHandler(this.OptionsForm_AssignDataContext);
-            ((System.ComponentModel.ISupportInitialize)(this._optionsFormControllerBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(494, 260);
+            Controls.Add(dateTimePicker1);
+            Controls.Add(label3);
+            Controls.Add(numericUpDown1);
+            Controls.Add(label2);
+            Controls.Add(textBox1);
+            Controls.Add(checkBox1);
+            Controls.Add(label1);
+            Controls.Add(commandButton1);
+            Controls.Add(_okButton);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            Name = "OptionsForm";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            Text = "OptionsForm";
+            ((System.ComponentModel.ISupportInitialize)_optionsFormControllerBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

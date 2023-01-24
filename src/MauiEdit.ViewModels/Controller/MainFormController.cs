@@ -1,7 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace MauiEdit.ViewModels;
 

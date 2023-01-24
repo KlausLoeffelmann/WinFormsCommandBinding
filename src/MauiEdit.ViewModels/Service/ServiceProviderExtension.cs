@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MauiEdit.Services.Extension;
+﻿namespace MauiEdit.Services.Extension;
 
 public static class ServiceProviderExtension
 {

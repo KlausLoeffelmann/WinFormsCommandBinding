@@ -45,8 +45,8 @@
             _wordCountStatusStripLabel = new System.Windows.Forms.ToolStripStatusLabel();
             _rowNumberStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             _columnNumberStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            _editorSurface = new EditorControl();
             toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            _editorSurface = new EditorControl();
             trackBar1 = new System.Windows.Forms.TrackBar();
             _rewrapButton = new System.Windows.Forms.Button();
             _charWrapThreshold = new System.Windows.Forms.Label();
@@ -77,7 +77,7 @@
             // 
             _newToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "NewDocumentCommand", true));
             _newToolStripMenuItem.Name = "_newToolStripMenuItem";
-            _newToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            _newToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             _newToolStripMenuItem.Text = "New...";
             // 
             // _mainFormControllerBindingSource
@@ -88,18 +88,18 @@
             // 
             _insertDemoTextToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "InsertDemoTextCommand", true));
             _insertDemoTextToolStripMenuItem.Name = "_insertDemoTextToolStripMenuItem";
-            _insertDemoTextToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            _insertDemoTextToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             _insertDemoTextToolStripMenuItem.Text = "&Insert demo text";
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new System.Drawing.Size(221, 6);
+            toolStripMenuItem1.Size = new System.Drawing.Size(197, 6);
             // 
             // _quitToolStripMenuItem
             // 
             _quitToolStripMenuItem.Name = "_quitToolStripMenuItem";
-            _quitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            _quitToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             _quitToolStripMenuItem.Text = "&Quit";
             // 
             // toolStripMenuItem3
@@ -125,14 +125,15 @@
             // 
             // _optionsToolStripMenuItem
             // 
+            _optionsToolStripMenuItem.DataBindings.Add(new System.Windows.Forms.Binding("Command", _mainFormControllerBindingSource, "ShowToolsOptionsCommand", true));
             _optionsToolStripMenuItem.Name = "_optionsToolStripMenuItem";
-            _optionsToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+            _optionsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             _optionsToolStripMenuItem.Text = "&Options...";
             // 
             // toolStripMenuItem2
             // 
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new System.Drawing.Size(150, 6);
+            toolStripMenuItem2.Size = new System.Drawing.Size(221, 6);
             // 
             // _statusStrip
             // 
@@ -164,6 +165,13 @@
             _columnNumberStatusLabel.Size = new System.Drawing.Size(94, 20);
             _columnNumberStatusLabel.Text = "Column: ###";
             // 
+            // toolStripStatusLabel1
+            // 
+            toolStripStatusLabel1.DataBindings.Add(new System.Windows.Forms.Binding("Text", _mainFormControllerBindingSource, "SelectionLength", true));
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Size = new System.Drawing.Size(153, 20);
+            toolStripStatusLabel1.Text = "Selection Length: ###";
+            // 
             // _editorSurface
             // 
             _editorSurface.AcceptsReturn = true;
@@ -178,13 +186,6 @@
             _editorSurface.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             _editorSurface.Size = new System.Drawing.Size(732, 488);
             _editorSurface.TabIndex = 2;
-            // 
-            // toolStripStatusLabel1
-            // 
-            toolStripStatusLabel1.DataBindings.Add(new System.Windows.Forms.Binding("Text", _mainFormControllerBindingSource, "SelectionLength", true));
-            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new System.Drawing.Size(153, 20);
-            toolStripStatusLabel1.Text = "Selection Length: ###";
             // 
             // trackBar1
             // 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MauiEdit.ViewModels;
+﻿using MauiEdit.ViewModels;
 
 namespace MauiEdit.Services;
 
@@ -37,32 +32,35 @@ internal class WinFormsDialogService : IDialogService
         _controllerFormTypeLookup.Add(uiController, viewAsForm);
     }
 
-    public async Task NavigateToAsync(ViewController registeredController, bool modalIfPossible = false)
+    public async Task<string> ShowModalAsync(ModalViewController registeredController)
     {
+        ArgumentNullException.ThrowIfNull(registeredController);
+
         if (_controllerFormTypeLookup.TryGetValue(registeredController.GetType(), out var viewType))
         {
             if (Activator.CreateInstance(viewType) is Form view)
             {
                 view.DataContext = registeredController;
 
-                if (modalIfPossible)
+                // Since the Buttons are supposed to be command-bound
+                // the ViewModel should know the dialog result via binding.
+                DialogResult dialogResult = await s_asyncHelper!.InvokeAsync(
+                    () => view.ShowDialog());
+
+                string returnValue = dialogResult switch
                 {
-                    // Since the Buttons are supposed to be command-bound
-                    // the ViewModel should know the dialog result via binding.
-                    await s_asyncHelper!.InvokeAsync(
-                        () => view.ShowDialog());
-                }
-                else
-                {
-                    // This needs more Infrastructure.
-                    // We're only showing the Form.
-                    // But the View inside the Form
-                    // container could change to implement
-                    // a real navigation.
-                    view.Show();
-                }
+                    DialogResult.OK => "OK",
+                    DialogResult.Cancel => "Cancel",
+                    _ => throw new Exception($"Unknown dialog result: {dialogResult}"),
+                };
+
+                return returnValue;
             }
+
+            throw new Exception($"Could not create the view of type {viewType}.");
         }
+
+        throw new Exception($"Could not find a view for controller of type {registeredController.GetType()}.");
     }
 
     public async Task<string> ShowMessageBoxAsync(string title, string heading, string message, params string[] buttons)

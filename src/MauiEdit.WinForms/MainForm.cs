@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using MauiEdit.ViewModels;
+﻿using MauiEdit.ViewModels;
 
 using static WinFormsCommandBindingDemo.Program;
 

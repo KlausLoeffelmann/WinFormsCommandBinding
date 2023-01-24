@@ -5,6 +5,7 @@
       <Nullable>enable</Nullable>
       <AssemblyName>WinFormsCommandBinding.Models</AssemblyName>
       <RootNamespace>WinFormsCommandBinding.Models</RootNamespace>
+      <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>

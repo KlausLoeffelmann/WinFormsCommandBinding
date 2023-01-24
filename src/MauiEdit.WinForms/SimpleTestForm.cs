@@ -1,20 +1,17 @@
-﻿using System;
-using System.Windows.Forms;
-using WinFormsCommandBinding.Examples;
+﻿using WinFormsCommandBinding.Examples;
 
-namespace WinFormsCommandBindingDemo
+namespace WinFormsCommandBindingDemo;
+
+public partial class SimpleTestForm : Form
 {
-    public partial class SimpleTestForm : Form
+    public SimpleTestForm()
     {
-        public SimpleTestForm()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            simpleCommandViewModelBindingSource.DataSource = new SimpleCommandViewModel();
-        }
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+        simpleCommandViewModelBindingSource.DataSource = new SimpleCommandViewModel();
     }
 }
